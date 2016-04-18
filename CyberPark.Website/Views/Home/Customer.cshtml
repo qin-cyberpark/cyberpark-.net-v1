@@ -1,0 +1,78 @@
+﻿@using CyberPark.Website.Models;
+@using CyberPark.Domain.Core;
+@model Customer
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="/home/customer" class="list-group-item active">General Info</a>
+                <a href="#" class="list-group-item">My Addresses</a>
+                @foreach (var account in Model.Accounts)
+                {
+                    <a href="/home/myAddress/@account.Id" class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;@account.Id-@account.Address </a>
+                }
+            </div>
+        </div>
+        <div class="col-md-9 ">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">General Information</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="list-unstyled personal-info" style="font-size:18px;">
+                                <li>
+                                    <strong class="text-info">
+                                        Customer ID: @xISPUser.CurrentUser.Id
+                                    </strong>
+                                </li>
+                                <li><strong class="text-info">@xISPUser.CurrentUser.Customer.Name</strong></li>
+                                <li><strong class="text-info">@xISPUser.CurrentUser.Email</strong></li>
+                                <li><strong class="text-info">@xISPUser.CurrentUser.PhoneNumber</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Change Password</h3>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="first_name" class="col-md-2">
+                                    New Password
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="password" class="form-control" required />
+                                </div>
+                                <label for="first_name" class="col-md-2">
+                                    Confirm Password
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="password" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px">
+                            <div class="form-group">
+                                <label for="first_name" class="col-md-2">
+                                    Current Password
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="password" class="form-control" required />
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <button type="submit" class="btn btn-success">Change Password</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div -->
+        </div>
+    </div>
+</div>

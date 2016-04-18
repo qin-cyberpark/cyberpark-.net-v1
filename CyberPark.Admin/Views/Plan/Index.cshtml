@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "Plan";
+}
+<div class="container" ng-controller="PlanController as vm">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Filter
+            </h4>
+        </div>
+        <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <!-- filtter -->
+                    <div class="col-md-2 col-xs-6">
+                        <label class="control-label">Active</label>
+                        <input type="checkbox" id="ChkActive" name="ChkActive" ng-model="vm.filter.active" />
+                    </div>
+                    <div class="col-md-2 col-xs-6">
+                        <label class="control-label">Inactive</label>
+                        <input type="checkbox" id="ChkInactive" name="ChkInactive" ng-model="vm.filter.inactive" />
+                    </div>
+                    <div class="col-md-2 col-xs-6">
+                        <label class="control-label">Personal</label>
+                        <input type="checkbox" id="ChkPersonal" name="ChkPersonal" ng-model="vm.filter.personal" />
+                    </div>
+                    <div class="col-md-2 col-xs-6">
+                        <label class="control-label">Business</label>
+                        <input type="checkbox" id="ChkBusiness" name="ChkBusiness" ng-model="vm.filter.business" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <!-- filtter -->
+                    <div class="col-md-2  col-xs-4">
+                        <label class="control-label">ADSL</label>
+                        <input type="checkbox" id="ChkADSL" name="ChkADSL" ng-model="vm.filter.adsl" />
+                    </div>
+                    <div class="col-sm-2  col-xs-4">
+                        <label class="control-label">VDSL</label>
+                        <input type="checkbox" id="ChkVDSL" name="ChkVDSL" ng-model="vm.filter.vdsl" />
+                    </div>
+                    <div class="col-md-2  col-xs-4">
+                        <label class="control-label">UFB</label>
+                        <input type="checkbox" id="ChkUFB" name="ChkUFB" ng-model="vm.filter.ufb" />
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="text-center">
+            <img src="/Content/img/loading.gif" ng-if="vm.loading" />
+        </div>
+    </div>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Plan
+                <button type="button" class="btn btn-xs btn-success pull-right" title="New Plan" ng-click="vm.createPlan()">
+                    New Plan
+                </button>
+            </h4>
+        </div>
+        <table id="planList" class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Broadband</th>
+                    <th>Type</th>
+                    <th>Sort</th>
+                    <th>PSTN</th>
+                    <th>VOIP</th>
+                    <th>Contract</th>
+                    <th>Monthly</th>
+                    <th>Status</th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="plan in vm.plans | filter:vm.filter.express  | orderBy:'accountType'| orderBy:'broadbandType' | orderBy:'-isActive'">
+                    <td>{{plan.name}}</td>
+                    <td>{{plan.broadbandType}}</td>
+                    <td>{{plan.isBusiness?"Business":"Personal"}}</td>
+                    <td>{{plan.isNaked?"Naked":"Clothed"}}</td>
+                    <td>{{plan.pstnCount>0?plan.pstnCount:"-"}}</td>
+                    <td>{{plan.voipCount>0?plan.voipCount:"-"}}</td>
+                    <td>{{plan.monthsOfContract>0?plan.monthsOfContract +'M':'-'}}</td>
+                    <td>{{plan.monthlyPrice | currency:"$"}}</td>
+                    <td>{{plan.isActive?"ACTIVE":"INACTIVE"}}</td>
+                    <td class="text-right">
+                        <button type="button" class="btn btn-xs btn-success" title="Edit Plan" ng-click="vm.editPlan(plan)">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                        <img src="/Content/img/loading.gif" ng-if="plan.settingActivity" />
+                        <button type="button" class="btn btn-xs btn-warning" title="{{plan.isActive?"Inactive":"Active"}} Plan" ng-if="!plan.settingActivity" ng-click="vm.setPlanActivity(plan)">
+                            <span class="glyphicon" ng-class="{'glyphicon-play': !plan.isActive,'glyphicon-stop':plan.isActive}"></span>
+                        </button>
+                        <img src="/Content/img/loading.gif" ng-if="plan.removing" />
+                        <button type="button" class="btn btn-xs btn-danger" title="Remove Plan" ng-if="!plan.removing && !plan.confirmRemove" ng-click="vm.queryRemove(plan)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                        <button type="button" class="btn btn-xs btn-danger" title="Cancel Remove Plan" ng-if="plan.confirmRemove" ng-click="vm.cancelRemove(plan)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <button type="button" class="btn btn-xs btn-danger" title="Confirm Remove Plan" ng-if="plan.confirmRemove" ng-click="vm.removePlan(plan)">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- #region new / edit modal -->
+    <div class="modal fade" id="planEditModal" tabindex="-1" role="dialog" aria-labelledby="planEditModal" data-backdrop="static">
+        <div class="modal-dialog modal-md" role="document">
+            <form class="form-horizontal" ng-submit="vm.savePlan()">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="planEditModalLabel">{{vm.editingPlan.id?"Edit Plan":"New Plan"}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="planName" class="control-label col-md-3">Name</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="planName" ng-model="vm.editingPlan.name" required/>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="checkbox" id="isActive" ng-model="vm.editingPlan.isActive" />
+                                <label for="isActive" class="control-label">Active</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="monthlyPrice" class="control-label col-md-3">Monthly Price</label>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="monthlyPrice" ng-model="vm.editingPlan.monthlyPrice" required step="0.01">
+                            </div>
+                            <label for="monthOfTerm" class="control-label col-md-3">Months Of Contract</label>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="monthOfTerm" ng-model="vm.editingPlan.monthsOfContract" required min="0" max="36">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="accountType" class="control-label col-md-3">Type</label>
+                            <div class="col-md-3">
+                                <input type="checkbox" id="isBusiness" ng-model="vm.editingPlan.isBusiness">
+                                <label for="isActive" class="control-label">Business Plan</label>
+                            </div>
+                            <label for="broadbandType" class="control-label col-md-3">Broadband</label>
+                            <div class="col-md-3">
+                                <select class="form-control" id="broadbandType" ng-model="vm.editingPlan.broadbandType" required>
+                                    <option value="ADSL">ADSL</option>
+                                    <option value="VDSL">VDSL</option>
+                                    <option value="UFB">UFB</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pstnCount" class="control-label col-md-3">PSTN (Qty)</label>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="pstnCount" ng-model="vm.editingPlan.pstnCount" required min="0" max="4">
+                            </div>
+                            <label for="voipCount" class="control-label col-md-3">VOIP (Qty)</label>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="voipCount" ng-model="vm.editingPlan.voipCount" required min="0" max="4">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pstnCount" class="control-label col-md-3">Connection Charge</label>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="newConnectionCharge" ng-model="vm.editingPlan.newConnectionCharge" min="0" step="0.01">
+                            </div>
+                            <label for="voipCount" class="control-label col-md-3">Modem Price</label>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="modemPrice" ng-model="vm.editingPlan.modemPrice" min="0" step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="control-label col-md-3">Description</label>
+                            <div class="col-md-9">
+                                <textarea rows="20" class="form-control" id="description" ng-model="vm.editingPlan.description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="displayPriority" class="control-label col-md-3">Priority</label>
+                            <div class="col-md-2">
+                                <input type="number" class="form-control" id="displayPriority" ng-model="vm.editingPlan.displayPriority">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-if="!vm.editingPlan.saving">Cancel</button>
+                        <button type="submit" class="btn btn-success" ng-disabled="vm.editingPlan.saving">{{vm.editingPlan.id?"Update":"Save"}}<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" ng-if="vm.editingPlan.saving"></span></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- #endregion new / edit modal -->
+</div>

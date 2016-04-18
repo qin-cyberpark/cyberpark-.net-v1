@@ -1,0 +1,186 @@
+﻿@{
+    ViewBag.Title = "Service";
+}
+<div class="container" ng-controller="ServicePriceController as vm">
+    <!--
+    <div class="panel panel-success">
+
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Filter
+            </h4>
+        </div>
+        <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <div class="col-md-2 col-xs-6">
+                        <label class="control-label">Active</label>
+                        <input type="checkbox" id="ChkActive" name="ChkActive" ng-model="vm.filter.active" />
+                    </div>
+                    <div class="col-md-2 col-xs-6">
+                        <label class="control-label">Inactive</label>
+                        <input type="checkbox" id="ChkInactive" name="ChkInactive" ng-model="vm.filter.inactive" />
+                    </div>
+                    <div class="col-md-2 col-xs-6">
+                        <label class="control-label">Personal</label>
+                        <input type="checkbox" id="ChkPersonal" name="ChkPersonal" ng-model="vm.filter.isPersonal" />
+                    </div>
+                    <div class="col-md-2 col-xs-6">
+                        <label class="control-label">Business</label>
+                        <input type="checkbox" id="ChkBusiness" name="ChkBusiness" ng-model="vm.filter.isBusiness" />
+                    </div>
+                    <div class="col-md-2 col-xs-6">
+                        <label class="control-label">Monthly</label>
+                        <input type="checkbox" id="ChkClothed" name="ChkClothed" ng-model="vm.filter.isMonthly" />
+                    </div>
+                    <div class="col-md-2 col-xs-6">
+                        <label class="control-label">One-Off</label>
+                        <input type="checkbox" id="ChkNaked" name="Naked" ng-model="vm.filter.isOneOff" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    -->
+    <div class="row">
+        <div class="text-center">
+            <img src="/Content/img/loading.gif" ng-if="vm.loading" />
+        </div>
+    </div>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Plan
+                <button type="button" class="btn btn-xs btn-success pull-right" title="New Service" ng-click="vm.createService()">
+                    New Service
+                </button>
+            </h4>
+        </div>
+        <table id="serviceList" class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>SubType</th>
+                    <th>Price</th>
+                    <th>Business</th>
+                    <th>Monthly</th>
+                    <th>Status</th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="service in vm.services | filter:vm.filter.express  | orderBy:'serviceSubType' | orderBy:'serviceType' | orderBy:'isBusiness' |orderBy:'-isActive'">
+                    <td>{{service.name}}</td>
+                    <td>{{service.serviceType}}</td>
+                    <td>{{service.serviceSubType}}</td>
+                    <td>{{service.price | currency:"$"}}</td>
+                    <td>{{service.isBusiness?"Yes":""}}</td>
+                    <td>{{service.isMonthly?"Monthly":"One-Off"}}</td>
+                    <td>{{service.isActive?"ACTIVE":"INACTIVE"}}</td>
+                    <td class="text-right">
+                        <button type="button" class="btn btn-xs btn-success" title="Edit Service" ng-click="vm.editService(service)">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                        <img src="/Content/img/loading.gif" ng-if="service.settingActivity" />
+                        <button type="button" class="btn btn-xs btn-warning" title="{{service.isActive?"Inactive":"Active"}} Plan" ng-if="!service.settingActivity" ng-click="vm.setServiceActivity(service)">
+                            <span class="glyphicon" ng-class="{'glyphicon-play': !service.isActive,'glyphicon-stop':service.isActive}"></span>
+                        </button>
+                        <img src="/Content/img/loading.gif" ng-if="service.removing" />
+                        <button type="button" class="btn btn-xs btn-danger" title="Remove Plan" ng-if="!service.removing && !service.confirmRemove" ng-click="vm.queryRemove(service)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                        <button type="button" class="btn btn-xs btn-danger" title="Cancel Remove Plan" ng-if="service.confirmRemove" ng-click="vm.cancelRemove(service)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <button type="button" class="btn btn-xs btn-danger" title="Confirm Remove Plan" ng-if="service.confirmRemove" ng-click="vm.removeService(service)">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- #region new / edit modal -->
+    <div class="modal fade" id="priceEditModal" tabindex="-1" role="dialog" aria-labelledby="priceEditModal" data-backdrop="static">
+        <div class="modal-dialog modal-md" role="document">
+            <form class="form-horizontal" ng-submit="vm.saveService()">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="planEditModalLabel">{{vm.editingService.id?"Edit Service":"New Service"}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="planName" class="control-label col-md-2">Name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="serviceName" ng-model="vm.editingService.name" required>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="checkbox" id="isActive" ng-model="vm.editingService.isActive" />
+                                <label for="isActive" class="control-label">Active</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="broadbandType" class="control-label col-md-2">Type</label>
+                            <div class="col-md-3">
+                                <select class="form-control" id="serviceType" ng-model="vm.editingService.serviceType" required>
+                                    <option value="Broadband">Broadband</option>
+                                    <option value="Phone">Phone</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <label for="broadbandType" class="control-label col-md-2">Sub Type</label>
+                            <div class="col-md-5">
+                                <select class="form-control" id="serviceSubType" ng-model="vm.editingService.serviceSubType" 
+                                        ng-if="vm.editingService.serviceType==='Broadband'" required>
+                                    <option value="ADSL">ADSL</option>
+                                    <option value="VDSL">VDSL</option>
+                                    <option value="UFB">UFB</option>
+                                </select>
+                                <select class="form-control" id="serviceSubType" ng-model="vm.editingService.serviceSubType"
+                                        ng-if="vm.editingService.serviceType==='Phone'" required>
+                                    <option value="PSTN">PSTN</option>
+                                    <option value="VoIP">VoIP</option>
+                                    <option value="Fax">Fax</option>
+                                </select>
+                                <select class="form-control" id="serviceSubType" ng-model="vm.editingService.serviceSubType"
+                                        ng-if="vm.editingService.serviceType==='Other'" required>
+                                    <option value="New Connection">New Connection</option>
+                                    <option value="Transfer">Transfer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="monthlyPrice" class="control-label col-md-2">Price</label>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="price" ng-model="vm.editingService.price" required step="0.01" min="0">
+                            </div>
+                            <div class="col-md-2 col-md-offset-3">
+                                <input type="checkbox" id="isActive" ng-model="vm.editingService.isMonthly" />
+                                <label for="isMonthly" class="control-label">Monthly</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="checkbox" id="isActive" ng-model="vm.editingService.isBusiness" />
+                                <label for="isBusiness" class="control-label">Business</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="control-label col-md-2">Description</label>
+                            <div class="col-md-10">
+                                <textarea rows="20" class="form-control" id="description" ng-model="vm.editingService.description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-if="!vm.editingService.saving">Cancel</button>
+                        <button type="submit" class="btn btn-success" ng-disabled="vm.editingService.saving">{{vm.editingService.id?"Update":"Save"}}<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" ng-if="vm.editingService.saving"></span></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- #endregion new / edit modal -->
+</div>

@@ -1,0 +1,279 @@
+﻿@using CyberPark.Domain.Core;
+@using CyberPark.Website.Models;
+@using CyberPark.Website.ViewModels;
+@model ApplicationViewModels.Summary
+@{
+    var _plans = (IList<Plan>)ViewBag.Plans;
+    var _plansJson = Utility.ToJson(_plans);
+    string _mainStyle = Model.Account.IsBusiness ? "info" : "success";
+}
+<style>
+    .application .option {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+        .application .option .remark {
+            font-size: 14px;
+        }
+
+    @@media (min-width: 800px) {
+        .affix {
+            width: 243px;
+            top: 30px;
+        }
+    }
+
+    @@media (min-width: 1200px) {
+        .affix {
+            width: 293px;
+            top: 30px;
+        }
+    }
+
+    @@media (max-width: 800px) {
+        .affix {
+            position: static;
+            height: auto;
+            top: auto;
+            bottom: auto;
+        }
+    }
+</style>
+<div class="container application" style="margin-top:20px;">
+    <div class="hidden-xs hidden-sm">
+        <ul class="nav nav-pills nav-wizard" style="width: 550px; margin: 0 auto;">
+            <li><a href="/application/availability"><span class="glyphicon glyphicon-search"></span>Check Availability</a><div class="nav-arrow"></div></li>
+            <li class="active"><div class="nav-wedge"></div><a href="javascript:void(0);"><span class="glyphicon glyphicon-pencil"></span> Fill in Application</a><div class="nav-arrow"></div></li>
+            <li><div class="nav-wedge"></div><a href="javascript:void(0);"><span class="glyphicon glyphicon-eye-open"></span> Review & Checkout</a></li>
+        </ul>
+        <hr>
+    </div>
+    @using (Html.BeginForm("Submit", "Application", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="row" ng-controller="ApplicationController as appCtrl" ng-init="appCtrl.init('@Model.Account.Address',@_plansJson,'@Model.Plan.Id')">
+            @Html.HiddenFor(x => x.Account.Address)
+            @Html.HiddenFor(x => x.Account.Type)
+            @Html.HiddenFor(x => x.Plan.Id, new { ng_value = "appCtrl.application.plan.Id"})
+            <div class="col-md-9 col-sm-12 col-xs-12">
+                <!-- #region plan -->
+                <div class="panel panel-@_mainStyle">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            Plan
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6" ng-repeat="plan in appCtrl.plans" ng-click="appCtrl.select(plan)">
+                            <div class="alert plan-info" ng-class="{'alert-danger':plan.Id===appCtrl.application.plan.Id,'alert-@_mainStyle':plan.Id!==appCtrl.application.plan.Id}">
+                                <div class="panel-heading plan-name">
+                                    <span style="font-weight:bold; font-size:16px;position:relative;top:-5px;">
+                                        <span data-icon="" style="border: 1px solid; padding: 3px 3px; border-radius: 13px; background-color: #fff;">
+                                            <span class="glyphicon glyphicon-ok" ng-style="plan.Id===appCtrl.application.plan.Id?{opacity:1}:{opacity:0}"></span>
+                                        </span>
+                                    </span>
+                                    &nbsp;{{plan.Name}}
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <div class="plan-detail" ng-if="plan.PstnCount>0">
+                                            -{{plan.PstnCount + (plan.IsBusiness?' Business Phone Line':' Home Line')}}
+                                        </div>
+                                        <div class="plan-detail" ng-if="plan.voipCount>0">
+                                            -{{plan.PstnCount +  ' Voip' + (plan.IsBusiness?' Phone Line':' Home Line')}}
+                                        </div>
+                                        <div class="plan-detail">
+                                            -Free Installation
+                                        </div>
+                                        <div class="plan-detail">
+                                            -Free Modem Rental
+                                        </div>
+                                        <div class="plan-detail">
+                                            -{{plan.MonthsOfContract}} Month Contract
+                                        </div>
+                                    </div>
+                                    <div class="plan-price col-md-5 col-ms-5 col-xs-12">
+                                        <span class="amount">{{plan.MonthlyPrice}}<span class="month">MTH</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--#endregion-->
+                <!-- #region contract -->
+                <div class="panel panel-@_mainStyle" ng-if="appCtrl.application.plan.MonthsOfContract!=12">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            Contract
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-inline option" style="margin-bottom:0;">
+                            <li>
+                                <label>
+                                    <input type="radio" name="monthsOfContract" checked iCheck ng-model="appCtrl.application.contractMonths" />&nbsp;
+                                    <span class="text-@_mainStyle">
+                                        {{appCtrl.application.plan.MonthsOfContract}} Month Contract
+                                    </span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--#endregion-->
+                <!-- #region prepay -->
+                <div class="panel panel-@_mainStyle" ng-if="appCtrl.application.plan.MonthsOfContract>=12 && !appCtrl.application.plan.IsBusiness">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            Prepay
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-inline option" style="margin-bottom:0;">
+                            <li>
+                                <label>
+                                    <input type="radio" checked iCheck ng-model="appCtrl.application.payMonthly" value="false" />&nbsp;
+                                    <span class="text-@_mainStyle">
+                                        Prepay 12 Months (Get 1 <span class="text-danger">FREE</span> extra month)
+                                    </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" iCheck ng-model="appCtrl.application.payMonthly" value="true" />&nbsp;
+                                    <span class="text-@_mainStyle">
+                                        Pay Monthly
+                                    </span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--#endregion-->
+                <!-- #region contact -->
+                @if (xISPUser.CurrentUser != null)
+                {
+                    <div class="panel panel-@_mainStyle">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                Contact
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="title" class="col-md-2">Title</label>
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(x => x.Account.Title, new List<SelectListItem>
+                                    {
+                                        new SelectListItem() {Text = "Mr.", Value="Mr"},
+                                        new SelectListItem() {Text = "Ms.", Value="Ms"},
+                                    }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="first_name" class="col-md-2">
+                                    First name <span class="text-danger">(*)</span>
+                                </label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.Account.FirstName,
+                            new { required = "required", @class = "form-control", placeholder = "first name" })
+                                </div>
+                                <label for="last_name" class="col-md-2">
+                                    Last name <span class="text-danger">(*)</span>
+                                </label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.Account.LastName,
+                            new { required = "required", @class = "form-control", placeholder = "last name" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="first_name" class="col-md-2">
+                                    Email <span class="text-danger">(*)</span>
+                                </label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.Account.Email,
+                            new { required = "required", @class = "form-control", placeholder = "email" })
+                                </div>
+                                <label for="last_name" class="col-md-2">
+                                    Mobile <span class="text-danger">(*)</span>
+                                </label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.Account.Mobile,
+                            new { required = "required", @class = "form-control", placeholder = "mobile" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!--#endregion-->
+                <!-- #region organization -->
+                @if (Model.Account.IsBusiness)
+                {
+                    <div class="panel panel-@_mainStyle">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                Organization
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="first_name" class="col-md-4">
+                                    Organization Name <span class="text-danger">(*)</span>
+                                </label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.Account.OrganizationName,
+                                                new { required = "required", @class = "form-control",
+                                                    placeholder = "organization name" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+                <!--#endregion-->
+                *Free modem while you’re with CyberPark. *Installation is usually free of charge. A wiring charge may apply in some situations.
+            </div>
+            <!-- #region md/lg checkout -->
+            <div class="col-md-3 col-sm-12 col-xs-12" style="padding: 0;">
+                <div data-spy="affix" data-offset-top="60">
+                    <div class="panel panel-@_mainStyle">
+                        <div class="panel-body" style="padding-top:5px;">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <span class="glyphicon glyphicon-map-marker" style="font-size: 24px;"></span>&nbsp;&nbsp;
+                                    {{appCtrl.application.address}}&nbsp;&nbsp;<a href="/application/availability" class="btn btn-link" style="padding: 0;">Change</a>
+                                </div>
+                            </div>
+
+                            <div class="well" style="padding:8px; margin-bottom:0;">
+                                <h4 class="text-@_mainStyle" style="font-weight:bold;margin-top:0;">{{appCtrl.application.plan.BroadbandType}} Broadband Unlimited</h4>
+                                <p class="text-@_mainStyle" style="margin:0;" ng-if="appCtrl.application.plan.PstnCount>0">
+                                    - {{appCtrl.application.plan.PstnCount + (appCtrl.application.plan.IsBusiness?' Business Phone Line':' Home Line')}}
+                                </p>
+                                <p class="text-@_mainStyle" style="margin:0;" ng-if="appCtrl.application.plan.VoipCount>0">
+                                    - {{appCtrl.application.plan.VoipCount +  ' Voip' + (appCtrl.application.plan.IsBusiness?' Phone Line':' Home Line')}}
+                                </p>
+                                <p class="text-@_mainStyle" style="margin:0;">- {{appCtrl.application.plan.MonthsOfContract}} month contract</p>
+                                <p class="text-@_mainStyle" style="margin:0;"> - Free Modem Rental</p>
+                                <p class="text-@_mainStyle" style="margin:0;">  - Free Standard Installation</p>
+                                <p class="text-@_mainStyle" style="margin:0;" ng-if="appCtrl.application.payMonthly==='false'">- 1 FREE month</p>
+                            </div>
+                            <p class="text-danger text-center">
+                                <span style="font-size: 36px;font-weight: bold;">
+                                    NZ {{appCtrl.application.amount()  | currency:'$'}}
+                                </span>
+                                <span style="font-size: 16px;" ng-if="appCtrl.application.plan.IsBusiness">+GST</span>
+                            </p>
+                            @Html.HiddenFor(x => x.Plan.Id)
+                            @Html.HiddenFor(x => x.PayMonthly, new { ng_value = "appCtrl.application.payMonthly" })
+                            <button type="submit" class="btn btn-@_mainStyle btn-lg btn-block ladda-button" data-style="zoom-in" id="get-it-now" ng-click="appCtrl.preview()">Get it Now</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #endregion-->
+        </div>
+    }
+</div>

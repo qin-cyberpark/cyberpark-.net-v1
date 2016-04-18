@@ -1,0 +1,99 @@
+﻿@using CyberPark.Domain.Core;
+@using CyberPark.Website.ViewModels;
+@{
+    ViewBag.Title = "Account";
+    var _condition = Utility.ToJson((AccountViewModels.AccountSearchCondition)ViewBag.SearchCondition);
+}
+<!-- search -->
+<div class="container" ng-controller="AccountController as acctCtrl" ng-init="acctCtrl.init(@_condition)">
+    <!-- searcher -->
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Search
+            </h4>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-1">Customer#</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_customerId" name="srch_customerId" class="form-control" ng-model="acctCtrl.searcher.customerId" />
+                    </div>
+                    <label class="control-label col-md-1">Account#</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_accountId" name="srch_accountId" class="form-control" ng-model="acctCtrl.searcher.accountId" />
+                    </div>
+                    <label class="control-label col-md-1">Name</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_name" name="srch_name" class="form-control" ng-model="acctCtrl.searcher.name" />
+                    </div>
+                    <label class="control-label col-md-1">Address</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_address" name="srch_address" class="form-control" ng-model="acctCtrl.searcher.address" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-1">ASID</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_asid" name="srch_asid" class="form-control" ng-model="acctCtrl.searcher.asid" />
+                    </div>
+                    <label class="control-label col-md-1">PSTN No</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_pstn" name="srch_pstn" class="form-control" ng-model="acctCtrl.searcher.pstn" />
+                    </div>
+                    <label class="control-label col-md-1">VoIP No</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_voip" name="srch_voip" class="form-control" ng-model="acctCtrl.searcher.voip" />
+                    </div>
+                    <label class="control-label col-md-1">Status</label>
+                    <div class="col-md-2">
+                        <select  name="srch_status" class="form-control" ng-model="acctCtrl.searcher.status">
+                            <option value=""></option>
+                            @foreach (var status in Service.Statuses.Status)
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2  col-md-offset-10 text-right">
+                        <button type="button" class="btn btn-success btn-block" id="query" ng-click="acctCtrl.search()">Query</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Account
+            </h4>
+        </div>
+        <table id="addressList" class="table">
+            <thead>
+                <tr>
+                    <th>Account#</th>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="acct in acctCtrl.accounts">
+                    <td><a target="_blank" href="/customer/view/{{acct.customerId}}">{{acct.id}}</td>
+                    <td>{{acct.type}}</td>
+                    <td>{{acct.name}}</td>
+                    <td>{{acct.address}}</td>
+                    <td>{{acct.email}}</td>
+                    <td>{{acct.mobile}}</td>
+                    <td class="text-right">{{acct.balance | currency:"$"}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

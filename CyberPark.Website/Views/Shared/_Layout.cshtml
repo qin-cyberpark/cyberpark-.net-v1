@@ -1,0 +1,152 @@
+﻿@using CyberPark.Website.Models
+<!DOCTYPE html>
+<html lang="en" ng-app="CyberPark">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="Join our promotion plan to gain a free iPad. CyberPark Provides All-In-One ISP Solutions Suit for Business And Personal Customers.">
+    <meta name="keywords" content="cyberpark, broadband, phone, internet, internet service provider, ADSL, VDSL, UFB, telephone, unbundled, fiber, data, plans, calling, topup 纽西兰宽带充值, 话费充值, 座机, 话费查询, 网络营销, 无线网络, 网络测速, 光钎宽带, 免费iPad">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>The Outstanding Broadband : Wireless Solution's - CyberPark</title>
+    <link rel="shortcut icon" type="image/ico" href="~/Content/img/icon.png" />
+    <link rel="apple-touch-icon" href="con /cc/apple-touch-icon-iphone.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="~/Content/img/apple-touch-icon-small.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="~/Content/img/apple-touch-icon-middle.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="~/Content/img/apple-touch-icon-large.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="~/Content/img/apple-touch-icon-large.png" />
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    @Styles.Render("~/css/main")
+    @Scripts.Render("~/bundle/js-lib")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-static-top" id="navhead">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <span style="display:inline-block; height:46px; width:111px; background:url('/Content/img/logo.png') no-repeat; margin-top:-12px; background-size:contain;"></span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/application/personal">Personal Plan</a></li>
+                    <li><a href="/application/business">Business Plan</a></li>
+                    <li>
+                        <a rel="nofollow" href="#" class="dropdown-toggle" data-toggle="dropdown">Information<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/about-us">About CyberPark</a></li>
+                            <li><a href="/phone-calling-rates">PSTN Calling Rates</a></li>
+                            <li><a href="/voip-calling-rates">VoIP Calling Rates</a></li>
+                            <li><a href="/hospitality-integrated-solution">Hospitality Integrated Solution</a></li>
+                            <li><a href="/pbx-solution">PBX Solution</a></li>
+                            <li><a href="/wifi-solution">Wi-Fi Solution</a></li>
+                            <li><a href="/term-and-conditions">Terms &amp; Conditions</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/about-us#contact" rel="nofollow"><span style="color: white">0800 229 237</span></a></li>
+                    <li>
+                        <a rel="nofollow" href="#" class="dropdown-toggle" data-toggle="dropdown">Share <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="fb-share-button" data-href="https://www.facebook.com/pages/Cyberpark/223261207861301" data-type="button_count"></a>
+                            </li>
+                            <li class="follow-us-on">
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/CyberparkNZ" data-text="CyberPark provides broadband, phone, and other internet services to savvy New Zealand homes and businesses. CyberPark Provides All-In-One ISP Solutions Suit for Business And Personal Customers.">Tweet</a>
+                            </li>
+                            <li class="follow-us-on">
+                                <a class="g-follow" data-annotation="bubble" data-height="20" data-href="https://plus.google.com/113358993092406471657" data-rel="publisher"></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p class="navbar-text navbar-right" ng-controller="LoginController as vm">
+                    @if(xISPUser.CurrentUser != null && xISPUser.CurrentUser.Customer!=null){
+                        <span class="glyphicon glyphicon-user" style="margin-right:10px;"></span>
+                        <a href="/home/customer" class="navbar-link" style="margin-right:10px;">
+                            @xISPUser.CurrentUser.Customer.Name &nbsp;|&nbsp;My ID: @xISPUser.CurrentUser.Customer.Id
+                        </a>
+                        <a ng-click="vm.logout()" href="#LogOut" data-toggle="tooltip" data-placement="bottom" data-original-title="Sign out">
+                            <span class="glyphicon glyphicon-log-out" style="margin-right:10px;"></span>
+                        </a>
+                    }else{
+                        <a href="/home/login" class="navbar-link"><span class="glyphicon glyphicon-log-in"></span> Sign in</a>
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="fb-root"></div>
+    <style>
+        .home-title {
+            font-size: 36px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <style>
+        #navhead {
+            margin-bottom: 0;
+        }
+    </style>
+    @RenderBody()
+    <div class="navbar-inverse" style="padding-bottom: 50px">
+        <div class="container">
+            <footer style="margin-top: 10px">
+                <p class="pull-right hidden-xs hidden-sm" style="color: #fff">
+                    &copy; CyberPark Limited &middot; 2014
+                </p>
+                <p class="text-center hidden-md hidden-lg" style="color: #fff">
+                    &copy; CyberPark Limited &middot; 2014
+                </p>
+                <p class="hidden-xs hidden-sm">
+                    <a href="/about-us" rel="nofollow">About CyberPark</a>
+                    <span style="color: #fff">&middot;</span>
+                    <a href="/term-and-conditions" rel="nofollow">Terms &amp; Conditions</a>
+                    <span style="color: #fff">&middot;</span>
+                    <a href="/about-us#contact" rel="nofollow">Contact Us: 0800 229 237</a>
+                </p>
+                <p class="text-center hidden-md hidden-lg">
+                    <a href="/about-us" rel="nofollow">About CyberPark</a>
+                    <span style="color: #fff">&middot;</span>
+                    <a href="/term-and-conditions" rel="nofollow">Terms &amp; Conditions</a>
+                    <span style="color: #fff">&middot;</span>
+                    <a href="/about-us#contact" rel="nofollow">Contact Us: 0800 229 237</a>
+                </p>
+            </footer>
+            <ul class="list-inline" style="margin: 0 auto; width: 320px">
+                <li>
+                    <a target="_blank" href="https://www.facebook.com/pages/Cyberpark/223261207861301">
+                        <img src="/Content/img/facebook_lg.png" alt="Wide Range Broadband" title="Wide Range Broadband" />
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="https://plus.google.com/113358993092406471657/posts" rel="publisher">
+                        <img src="/Content/img/googleplus_lg.png" alt="Our Customers Are Now Enjoying Nation's Highest Broadband Speed" title="Our Customers Are Now Enjoying Nation's Highest Broadband Speed" />
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="https://twitter.com/nzcyberpark">
+                        <img src="/Content/img/twitter_lg.png" alt="Join Us To Have An Unforgetable Internet Surfing Experience" title="Join Us To Have An Unforgetable Internet Surfing Experience" />
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="http://www.youtube.com/channel/UCTmXMdGEUxYRwlxw3SjZePA">
+                        <img src="/Content/img/youtube_lg.png" alt="Our Customer's Testimonials Is The Best Thing We've Got" title="Our Customer's Testimonials Is The Best Thing We've Got" />
+                    </a>
+                </li>
+            </ul>
+            <img src="/Content/img/two_dimensional_code.png" class="img-responsive" width="160px" height="160px" style="margin: 20px auto" alt="Most Reliable NZ ISP Provider" title="Most Reliable NZ ISP Provider">
+        </div>
+    </div>
+    @Scripts.Render("~/bundle/js")
+</body>
+</html>

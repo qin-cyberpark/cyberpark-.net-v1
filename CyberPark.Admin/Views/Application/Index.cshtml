@@ -1,0 +1,296 @@
+﻿@using CyberPark.Domain.Core;
+@using CyberPark.Website.ViewModels;
+@model ApplicationViewModels.Summary
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    var _address = ViewBag.Address;
+    var _plans = (IList<Plan>)ViewBag.Plans;
+    var _plansJson = Utility.ToJson(_plans);
+    var _planId = ViewBag.SelectedPlanId;
+}
+<style>
+    .application .option {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+        .application .option .remark {
+            font-size: 14px;
+        }
+
+    .affix {
+        width: 293px;
+        top: 30px;
+    }
+</style>
+<div class="container application" style="margin-top:20px;">
+    <div class="hidden-xs hidden-sm">
+        <ul class="nav nav-pills nav-wizard" style="width: 550px; margin: 0 auto;">
+            <li><a href="/availability"><span class="glyphicon glyphicon-search"></span>Check Availability</a><div class="nav-arrow"></div></li>
+            <li class="active"><div class="nav-wedge"></div><a href="javascript:void(0);"><span class="glyphicon glyphicon-pencil"></span> Fill in Application</a><div class="nav-arrow"></div></li>
+            <li><div class="nav-wedge"></div><a href="javascript:void(0);"><span class="glyphicon glyphicon-eye-open"></span> Review & Checkout</a></li>
+        </ul>
+        <hr>
+    </div>
+
+
+    <div class="row" ng-controller="ApplicationController as appCtrl" ng-init="appCtrl.init('@_address',@_plansJson,'@_planId')">
+        >
+        <div class="col-md-9 col-sm-12 col-xs-12">
+            <!-- #region plan -->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Plan
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-4" ng-repeat="plan in appCtrl.plans" ng-click="appCtrl.select(plan)">
+                        <div class="alert plan-info" ng-class="{'alert-danger':plan.Id===appCtrl.application.plan.Id,'alert-success':plan.Id!==appCtrl.application.plan.Id}">
+                            <div class="plan-name">
+                                {{plan.BroadbandType}} Unlimited
+                            </div>
+                            <div class="plan-phone">
+                                {{plan.PstnCount>0?'+ ' + plan.PstnCount + (plan.IsBusiness?' Business Phone Line':' Home Line'):''}}&nbsp;
+                            </div>
+                            <div class="plan-phone">
+                                {{plan.VoipCount>0?'+ ' + plan.VoipCount +  ' Voip' + (plan.IsBusiness?' Phone Line':' Home Line'):''}}&nbsp;
+                            </div>
+                            <div class="plan-price text-center">
+                                <span style="font-weight:bold; font-size:20px;position: relative;top:-15px">
+                                    <span data-icon="" style="border: 1px solid; padding: 6px 6px; border-radius: 20px; background-color: #fff;">
+                                        <span class="glyphicon glyphicon-ok" ng-style="plan.Id===appCtrl.application.plan.Id?{opacity:1}:{opacity:0}"></span>
+                                    </span>
+                                </span>
+                                <span class="amount">{{plan.MonthlyPrice}}</span>
+                                <span class="month">/MTH</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--#endregion-->
+            <!-- #region contract -->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Contract
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-inline option" style="margin-bottom:0;">
+                        <li style="padding: 10px 20px;">
+                            <label>
+                                <input type="radio" name="monthsOfContract" checked iCheck ng-model="appCtrl.application.contractMonths" />&nbsp;
+                                <span class="text-success">
+                                    {{appCtrl.application.plan.MonthsOfContract}} Months Contract
+                                </span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--#endregion-->
+            <!-- #region prepay -->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Prepay
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled option">
+                        <li>
+                            <label>
+                                <input type="radio" value="1" iCheck ng-model="appCtrl.application.prepayMonths" />
+                                <span class="text-success">
+                                    Prepay 1 month
+                                </span>
+                                <span class="text-danger remark">(No discount)</span>
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" value="6" iCheck ng-model="appCtrl.application.prepayMonths" />
+                                <span class="text-success">
+                                    Prepay 6 months
+                                </span>
+                                <span class="text-danger remark">(5% off the total price of 6 months plan)</span>
+                            </label>
+                            <span style="float:right;font-weight:bold;">
+                                <span class="text-danger">{{appCtrl.application.plan.MonthlyPrice * 6 * 0.95 | currency:'$'}}</span>
+                                (<span class="text-success">save {{appCtrl.application.plan.MonthlyPrice * 6 * 0.05 | currency:'$'}}</span>)
+                            </span>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" iCheck value="12" ng-model="appCtrl.application.prepayMonths" />
+                                <span class="text-success">
+                                    Prepay 12 months
+                                </span>
+                                <span class="text-danger remark">(10% off the total price of 12 months plan)</span>
+
+                            </label>
+                            <span style="float:right;font-weight:bold;">
+                                <span class="text-danger">{{appCtrl.application.plan.MonthlyPrice * 12 * 0.9 | currency:'$'}}</span>
+                                (<span class="text-success">save {{appCtrl.application.plan.MonthlyPrice * 12 * 0.1 | currency:'$'}}</span>)
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--#endregion-->
+            <!-- #region modem -->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Modem
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled option">
+                        <li>
+                            <label>
+                                <input type="radio" iCheck ng-model="appCtrl.application.needModem" value="true" />
+                                <span class="text-success">
+                                    Yes, I need a modem
+                                </span>
+                            </label>
+                            <span style="float:right;font-weight:bold;">
+                                <span class="text-danger">{{0 | currency:'$'}}</span>
+                                (<span class="text-success">save {{appCtrl.application.plan.ModemPrice | currency:'$'}}</span>)
+                            </span>
+                        </li>
+                        <!--li>
+                            <div class="well">
+                                <p class="text-warning">
+                                    *Free modem on 12 months contract
+                                </p>
+                            </div>
+                        </li-->
+                        <li>
+                            <label>
+                                <input type="radio" iCheck ng-model="appCtrl.application.needModem" value="false" />
+                                <span>
+                                    No, I don't need a modem
+                                </span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--#endregion-->
+            <!-- #region broadband option-->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Broadband Options
+                    </h4>
+                </div>
+                <div class="panel-body">
+
+                    <ul class="list-unstyled option">
+                        <li>
+                            <label>
+                                <input type="radio" iCheck ng-model="appCtrl.application.newConnection" value="true" />
+                                <span class="text-success">
+                                    Get a new broadband connection on an existing (but inactive) Phone Jack is
+                                </span>
+                                <span class="text-danger"> free</span>
+                                <span class="text-success">
+                                    (<span class="text-success">save {{150 | currency:'$'}}</span>)
+                                </span>
+                            </label>
+                        </li>
+                        <!-- li>
+                            <div class="well">
+                                <p class="text-warning">
+                                    *Free connection on 12 months contract
+                                </p>
+                            </div>
+                        </li-->
+                        <li>
+                            <label>
+                                <input type="radio" iCheck ng-model="appCtrl.application.newConnection" value="false" />
+                                <span class="text-success">
+                                    Transfer the existing broadband connection to CyberPark is free
+                                </span>
+                            </label>
+                        </li>
+                        <li>
+                            <div class="well">
+                                <p class="text-warning">
+                                    Dear customer, if you are transfering to CyberPark Internet service, please inform your existing Internet service provider AFTER you received our email and text message for SERVICE GIVEN DATE.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- #endregion -->
+        </div>
+        <!-- order-modal -->
+        <div class="col-md-3 hidden-xs hidden-sm" style="padding: 0;">
+
+            <div data-spy="affix" data-offset-top="60">
+                <div class="panel panel-success">
+                    <div class="panel-body" style="padding-bottom:0;">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <span class="glyphicon glyphicon-map-marker" style="font-size: 36px;"></span>
+                            </div>
+                            <div class="col-md-10">
+                                {{appCtrl.application.address}}&nbsp;&nbsp;<a href="/availability" class="btn btn-link" style="padding: 0;">Change</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="padding-top:0;">
+                        <div class="well" style="padding:8px; margin-bottom:0;">
+                            <h4 class="text-success" style="font-weight:bold;margin-top:0;">{{appCtrl.application.plan.BroadbandType}} Broadband Unlimited</h4>
+                            <p class="text-success" style="margin:0;" ng-if="appCtrl.application.plan.PstnCount>0">
+                                {{appCtrl.application.plan.PstnCount>0?'+ ' + appCtrl.application.plan.PstnCount + (appCtrl.application.plan.IsBusiness?' Business Phone Line':' Home Line'):''}}
+                            </p>
+                            <p class="text-success" style="margin:0;" ng-if="appCtrl.application.plan.VoipCount>0">
+                                {{appCtrl.application.plan.VoipCount>0?'+ ' + appCtrl.application.plan.VoipCount +  ' Voip' + (appCtrl.application.plan.IsBusiness?' Phone Line':' Home Line'):''}}
+                            </p>
+                            <p class="text-success" style="margin:0;" ng-if="appCtrl.application.needModem">
+                                + Modem
+                            </p>
+                            <p class="text-success" style="margin:0;">+ {{appCtrl.application.plan.MonthsOfContract}} months contract</p>
+                        </div>
+                        <hr style="margin:4px;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="bg-warning text-center text-warning" style="font-weight:bold;margin-bottom: 0;">Original</p>
+                                <p class="bg-warning text-center text-warning" style="font-size: 30px;font-weight:bold;">
+                                    {{appCtrl.application.oriPrice() | currency:'$'}}
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="bg-success text-center text-success" style="font-weight:bold;margin-bottom: 0;">Save</p>
+                                <p class="bg-success text-center text-success" style="font-size: 30px;font-weight:bold;">
+                                    {{appCtrl.application.saved() | currency:'$'}}
+                                </p>
+                            </div>
+                        </div>
+                        <hr style="margin:4px;">
+                        <p class="text-danger text-center">
+                            <span style="font-size: 36px;font-weight: bold;">
+                                NZ {{appCtrl.application.price() | currency:'$'}}
+                            </span>
+                            <span style="font-size: 16px;" ng-if="appCtrl.application.plan.IsBusiness">+GST</span>
+                        </p>
+                        @using(Html.BeginForm("Submit", "Application", FormMethod.Post)) {
+                            @Html.HiddenFor(x => x.Address,new {ng_model= "appCtrl.application.address" })
+                            @Html.HiddenFor(x => x.PlanId, new { ng_model = "appCtrl.application.plan.Id" })
+                            @Html.HiddenFor(x => x.NeedModem, new { ng_model = "appCtrl.application.needModem" })
+                            @Html.HiddenFor(x => x.NewConnection, new { ng_model = "appCtrl.application.newConnection" })
+                            @Html.HiddenFor(x => x.PrepayMonths, new { ng_model = "appCtrl.application.prepayMonths" })
+                            <button type="submit" class="btn btn-success btn-lg btn-block ladda-button" data-style="zoom-in" id="get-it-now" ng-click="appCtrl.preview()">Get it Now</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

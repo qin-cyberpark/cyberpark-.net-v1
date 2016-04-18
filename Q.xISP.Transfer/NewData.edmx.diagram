@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="845a82ceba5f49a2be0497884a7f1ad7" Name="Diagram1">
+        <EntityTypeShape EntityType="Entities.account_balance_records" Width="1.5" PointX="5.25" PointY="50.875" />
+        <EntityTypeShape EntityType="Entities.account" Width="1.5" PointX="3" PointY="23.875" />
+        <EntityTypeShape EntityType="Entities.addon_charge_records" Width="1.5" PointX="9.75" PointY="30" />
+        <EntityTypeShape EntityType="Entities.adjustment" Width="1.5" PointX="7.5" PointY="39.125" />
+        <EntityTypeShape EntityType="Entities.branch" Width="1.5" PointX="0.75" PointY="22.375" />
+        <EntityTypeShape EntityType="Entities.calling_charge_records" Width="1.5" PointX="12.75" PointY="30.875" />
+        <EntityTypeShape EntityType="Entities.calling_international_region_details" Width="1.5" PointX="10.5" PointY="14.875" />
+        <EntityTypeShape EntityType="Entities.calling_international_regions" Width="1.5" PointX="8.25" PointY="15" />
+        <EntityTypeShape EntityType="Entities.calling_offers" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Entities.calling_rates_pstn" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Entities.calling_records" Width="1.5" PointX="16" PointY="28.25" />
+        <EntityTypeShape EntityType="Entities.customer" Width="1.5" PointX="0.75" PointY="25.625" />
+        <EntityTypeShape EntityType="Entities.equipment_models" Width="1.5" PointX="5.25" PointY="21.875" />
+        <EntityTypeShape EntityType="Entities.equipment" Width="1.5" PointX="7.5" PointY="26.625" />
+        <EntityTypeShape EntityType="Entities.external_bill_addon_converters" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Entities.external_bill_files" Width="1.5" PointX="7.5" PointY="43.25" />
+        <EntityTypeShape EntityType="Entities.invoice" Width="1.5" PointX="5.25" PointY="35.375" />
+        <EntityTypeShape EntityType="Entities.plan" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Entities.product_charge_records" Width="1.5" PointX="12.5" PointY="36" />
+        <EntityTypeShape EntityType="Entities.product" Width="1.5" PointX="5.25" PointY="25.375" />
+        <EntityTypeShape EntityType="Entities.role" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="Entities.service_usage_offers" Width="1.5" PointX="10.5" PointY="24.75" />
+        <EntityTypeShape EntityType="Entities.service" Width="1.5" PointX="7.5" PointY="33.625" />
+        <EntityTypeShape EntityType="Entities.staff" Width="1.5" PointX="8.25" PointY="18" />
+        <EntityTypeShape EntityType="Entities.ticket_comments" Width="1.5" PointX="10.5" PointY="20.625" />
+        <EntityTypeShape EntityType="Entities.ticket" Width="1.5" PointX="8.25" PointY="21.125" />
+        <EntityTypeShape EntityType="Entities.transaction" Width="1.5" PointX="13.5" PointY="25.5" />
+        <EntityTypeShape EntityType="Entities.userclaim" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="Entities.userlogin" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="Entities.user" Width="1.5" PointX="0.75" PointY="2.625" />
+        <EntityTypeShape EntityType="Entities.void_invoices" Width="1.5" PointX="5.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Entities.warning" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Entities.calling_rates_voip" Width="1.5" PointX="9.75" PointY="0.75" />
+        <AssociationConnector Association="Entities.account_balance_records_ibfk_1" />
+        <AssociationConnector Association="Entities.accounts_ibfk_1" />
+        <AssociationConnector Association="Entities.accounts_ibfk_2" />
+        <AssociationConnector Association="Entities.accounts_ibfk_3" />
+        <AssociationConnector Association="Entities.addon_charge_records_ibfk_6" />
+        <AssociationConnector Association="Entities.adjustments_ibfk_8" />
+        <AssociationConnector Association="Entities.calling_charge_records_ibfk_3" />
+        <AssociationConnector Association="Entities.invoices_ibfk_1" />
+        <AssociationConnector Association="Entities.product_charge_records_ibfk_3" />
+        <AssociationConnector Association="Entities.products_ibfk_1" />
+        <AssociationConnector Association="Entities.tickets_ibfk_2" />
+        <AssociationConnector Association="Entities.transactions_ibfk_5" />
+        <AssociationConnector Association="Entities.addon_charge_records_ibfk_1" />
+        <AssociationConnector Association="Entities.addon_charge_records_ibfk_4" />
+        <AssociationConnector Association="Entities.addon_charge_records_ibfk_5" />
+        <AssociationConnector Association="Entities.adjustments_ibfk_7" />
+        <AssociationConnector Association="Entities.calling_charge_records_ibfk_1" />
+        <AssociationConnector Association="Entities.calling_charge_records_ibfk_2" />
+        <AssociationConnector Association="Entities.calling_records_ibfk_10" />
+        <AssociationConnector Association="Entities.calling_international_region_details_ibfk_1" />
+        <AssociationConnector Association="Entities.service_usage_offers_ibfk_3" />
+        <AssociationConnector Association="Entities.calling_records_ibfk_1" />
+        <AssociationConnector Association="Entities.calling_records_ibfk_4" />
+        <AssociationConnector Association="Entities.calling_records_ibfk_7" />
+        <AssociationConnector Association="Entities.ticket_comments_ibfk_2" />
+        <AssociationConnector Association="Entities.tickets_ibfk_1" />
+        <AssociationConnector Association="Entities.equipments_ibfk_2" />
+        <AssociationConnector Association="Entities.equipments_ibfk_3" />
+        <AssociationConnector Association="Entities.product_charge_records_ibfk_1" />
+        <AssociationConnector Association="Entities.transactions_ibfk_4" />
+        <AssociationConnector Association="Entities.product_charge_records_ibfk_2" />
+        <AssociationConnector Association="Entities.service_usage_offers_ibfk_2" />
+        <AssociationConnector Association="Entities.services_ibfk_1" />
+        <AssociationConnector Association="Entities.ticket_comments_ibfk_3" />
+        <AssociationConnector Association="Entities.ticket_comments_ibfk_1" />
+        <AssociationConnector Association="Entities.ApplicationUser_Claims" />
+        <AssociationConnector Association="Entities.ApplicationUser_Logins" />
+        <AssociationConnector Association="Entities.userroles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

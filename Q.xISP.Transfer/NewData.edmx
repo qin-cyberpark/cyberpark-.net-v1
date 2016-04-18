@@ -1,0 +1,2952 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NewEntities.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="account_balance_records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="PreviousBalance" Type="double" Nullable="false" />
+          <Property Name="TransactionId" Type="varchar" MaxLength="128" />
+          <Property Name="AdjustmentId" Type="varchar" MaxLength="128" />
+          <Property Name="InvoiceId" Type="int" />
+          <Property Name="Operate" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Amount" Type="double" Nullable="false" />
+          <Property Name="CurrentBalance" Type="double" Nullable="false" />
+          <Property Name="OperateDate" Type="date" Nullable="false" />
+          <Property Name="Memo" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="accounts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="None" Nullable="false" />
+          <Property Name="RegisterBranchId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ChargeBranchId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="InvoicePeriodType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NextInvoiceIssueDate" Type="datetime" Precision="0" />
+          <Property Name="Address" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Title" Type="varchar" MaxLength="20" />
+          <Property Name="Mobile" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="OrganizationName" Type="varchar" MaxLength="100" />
+          <Property Name="IdentityType" Type="varchar" MaxLength="20" />
+          <Property Name="IdentityNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Balance" Type="double" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="addon_charge_records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="FileId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ChargeDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="OriNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateFrom" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="DateTo" Type="datetime" Precision="0" />
+          <Property Name="Cost" Type="double" Nullable="false" />
+          <Property Name="Charge" Type="double" Nullable="false" />
+          <Property Name="ServiceId" Type="varchar" MaxLength="128" />
+          <Property Name="PhoneType" Type="varchar" MaxLength="20" />
+          <Property Name="AccountId" Type="int" />
+          <Property Name="InvoiceId" Type="int" />
+          <Property Name="Ignored" Type="bit" Nullable="false" />
+          <Property Name="IgnoredBy" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="DisplayDescription" Type="varchar" MaxLength="100" />
+          <Property Name="Warning" Type="varchar" MaxLength="255" />
+          <Property Name="Memo" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="adjustments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="InvoiceId" Type="int" />
+          <Property Name="Amount" Type="double" Nullable="false" />
+          <Property Name="Memo" Type="text" />
+          <Property Name="OperatedBy" Type="int" Nullable="false" />
+          <Property Name="OperatedDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="branches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="calling_charge_records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ServiceId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="DateFrom" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="DateTo" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Cost" Type="double" Nullable="false" />
+          <Property Name="Charge" Type="double" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="InvoiceId" Type="int" />
+          <Property Name="OperatedDate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="calling_international_region_details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="RegionId" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CountryName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IncludeMobile" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="calling_international_regions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="calling_offers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Minutes" Type="int" Nullable="false" />
+          <Property Name="Local" Type="bit" Nullable="false" />
+          <Property Name="National" Type="bit" Nullable="false" />
+          <Property Name="Mobile" Type="bit" Nullable="false" />
+          <Property Name="CallingRegionId" Type="varchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="OperatorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="calling_rates_pstn">
+          <Key>
+            <PropertyRef Name="Prefix" />
+            <PropertyRef Name="Type" />
+          </Key>
+          <Property Name="Prefix" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="AreaName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RatePerMinute" Type="double" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.cyberpark.calling_rates_voip' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="calling_rates_voip">
+          <Key>
+            <PropertyRef Name="Prefix" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="AreaName" />
+            <PropertyRef Name="RatePerMinute" />
+          </Key>
+          <Property Name="Prefix" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AreaName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RatePerMinute" Type="double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="calling_records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="FileId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="OriNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DesNumber" Type="varchar" MaxLength="50" />
+          <Property Name="AreaPrefix" Type="varchar" MaxLength="20" />
+          <Property Name="AreaName" Type="varchar" MaxLength="50" />
+          <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsMobile" Type="bit" Nullable="false" />
+          <Property Name="CallStart" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="Cost" Type="double" Nullable="false" />
+          <Property Name="RatePerMinute" Type="double" Nullable="false" />
+          <Property Name="ChargeMinute" Type="int" Nullable="false" />
+          <Property Name="Charge" Type="double" Nullable="false" />
+          <Property Name="ActualChargeMiute" Type="int" />
+          <Property Name="ActualCharge" Type="double" />
+          <Property Name="OfferId" Type="varchar" MaxLength="128" />
+          <Property Name="ServiceId" Type="varchar" MaxLength="128" />
+          <Property Name="PhoneType" Type="varchar" MaxLength="20" />
+          <Property Name="ChargeRecordId" Type="varchar" MaxLength="128" />
+          <Property Name="Ignored" Type="bit" Nullable="false" />
+          <Property Name="IgnoredBy" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="Warning" Type="varchar" MaxLength="255" />
+          <Property Name="Memo" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="None" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Title" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Mobile" Type="varchar" MaxLength="20" />
+          <Property Name="IdentityType" Type="varchar" MaxLength="20" />
+          <Property Name="IdentityNumber" Type="varchar" MaxLength="50" />
+          <Property Name="SignUpDate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="equipment_models">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Price" Type="double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="equipments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ModelId" Type="varchar" MaxLength="128" />
+          <Property Name="StoredDate" Type="date" Nullable="false" />
+          <Property Name="ProductId" Type="varchar" MaxLength="128" />
+          <Property Name="DispatchedDate" Type="datetime" Precision="0" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="external_bill_addon_converters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Keywords" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DisplayAs" Type="varchar" MaxLength="255" />
+          <Property Name="Price" Type="double" />
+          <Property Name="IsDisplay" Type="bit" />
+        </EntityType>
+        <EntityType Name="external_bill_files">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Source" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="CallOriNumberCount" Type="int" Nullable="false" />
+          <Property Name="CallRecordCount" Type="int" Nullable="false" />
+          <Property Name="CallTotalCost" Type="double" />
+          <Property Name="CallDateFrom" Type="datetime" Precision="0" />
+          <Property Name="CallDateTo" Type="datetime" Precision="0" />
+          <Property Name="AddonOriNumberCount" Type="int" />
+          <Property Name="AddonRecordCount" Type="int" />
+          <Property Name="AddonTotalCost" Type="double" />
+          <Property Name="AddonDateFrom" Type="datetime" Precision="0" />
+          <Property Name="AddonDateTo" Type="datetime" Precision="0" />
+          <Property Name="Size" Type="double" Nullable="false" />
+          <Property Name="OperatedBy" Type="int" Nullable="false" />
+          <Property Name="OperatedDate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="invoices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="DateFrom" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="DateTo" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="PreviousBalance" Type="double" Nullable="false" />
+          <Property Name="ChargeAmountExcludeGST" Type="double" Nullable="false" />
+          <Property Name="GST" Type="double" Nullable="false" />
+          <Property Name="ProductAmount" Type="double" Nullable="false" />
+          <Property Name="AddonAmount" Type="double" Nullable="false" />
+          <Property Name="CallingAmount" Type="double" Nullable="false" />
+          <Property Name="AdjustAmount" Type="double" Nullable="false" />
+          <Property Name="TransactionAmount" Type="double" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IssuedBy" Type="int" Nullable="false" />
+          <Property Name="IssuedDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="DisplayIssuedDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="AutoDeliver" Type="bit" />
+          <Property Name="DeliveredDate" Type="date" />
+        </EntityType>
+        <EntityType Name="plans">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsBusiness" Type="bit" Nullable="false" />
+          <Property Name="BroadbandType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PstnCount" Type="int" Nullable="false" />
+          <Property Name="VoipCount" Type="int" Nullable="false" />
+          <Property Name="MonthsOfContract" Type="int" Nullable="false" />
+          <Property Name="MonthlyPrice" Type="double" Nullable="false" />
+          <Property Name="NewConnectionCharge" Type="double" Nullable="false" />
+          <Property Name="ModemPrice" Type="double" Nullable="false" />
+          <Property Name="IsPromotion" Type="bit" Nullable="false" />
+          <Property Name="DisplayPriority" Type="int" Nullable="false" />
+          <Property Name="Memo" Type="varchar" MaxLength="255" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product_charge_records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProductId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="PreviousProductChargedToDate" Type="datetime" Precision="0" />
+          <Property Name="CurrentProductChargedToDate" Type="datetime" Precision="0" />
+          <Property Name="AmountGSTExclusive" Type="double" Nullable="false" />
+          <Property Name="ChargedDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="InvoiceId" Type="int" />
+          <Property Name="Memo" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="BasePriceGSTExclusive" Type="double" Nullable="false" />
+          <Property Name="DiscountRate" Type="double" Nullable="false" />
+          <Property Name="NumberOfMonthPerCharge" Type="int" Nullable="false" />
+          <Property Name="ServiceGivenDate" Type="datetime" Precision="0" />
+          <Property Name="ChargedToDate" Type="datetime" Precision="0" />
+          <Property Name="IsTermed" Type="bit" Nullable="false" />
+          <Property Name="TermStartDate" Type="datetime" Precision="0" />
+          <Property Name="MonthsOfTerm" Type="int" />
+          <Property Name="IsOneOff" Type="bit" Nullable="false" />
+          <Property Name="OneOffChargeDate" Type="datetime" Precision="0" />
+          <Property Name="HasOneOffCharged" Type="bit" />
+          <Property Name="AppliedDate" Type="date" Nullable="false" />
+          <Property Name="PrepayMonths" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="service_usage_offers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProductId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ServiceType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ServiceSubType" Type="varchar" MaxLength="20" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Minutes" Type="int" Nullable="false" />
+          <Property Name="DataFlow" Type="int" Nullable="false" />
+          <Property Name="Local" Type="bit" Nullable="false" />
+          <Property Name="National" Type="bit" Nullable="false" />
+          <Property Name="Mobile" Type="bit" Nullable="false" />
+          <Property Name="CallingRegionId" Type="varchar" MaxLength="20" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="OperatorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="services">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProductId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SubType" Type="varchar" MaxLength="20" />
+          <Property Name="IdentityNumber" Type="varchar" MaxLength="20" />
+          <Property Name="BroadbandSVLAN" Type="varchar" MaxLength="10" />
+          <Property Name="BroadbandCVLAN" Type="varchar" MaxLength="10" />
+          <Property Name="BroadbandPPPoeLoginName" Type="varchar" MaxLength="50" />
+          <Property Name="BroadbandPPPoePassword" Type="varchar" MaxLength="50" />
+          <Property Name="VoipPassword" Type="varchar" MaxLength="20" />
+          <Property Name="VoipAssignedDate" Type="datetime" Precision="0" />
+          <Property Name="ReadyForServiceDate" Type="datetime" Precision="0" />
+          <Property Name="Status" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="OperatorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="staffs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="None" Nullable="false" />
+          <Property Name="BranchId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Mobile" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="ticket_comments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="text" />
+          <Property Name="CommentDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="StaffId" Type="int" />
+        </EntityType>
+        <EntityType Name="tickets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SubType" Type="varchar" MaxLength="20" />
+          <Property Name="Title" Type="varchar" MaxLength="255" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="AccountId" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Mobile" Type="varchar" MaxLength="20" />
+          <Property Name="StaffLastViewedDate" Type="datetime" Precision="0" />
+          <Property Name="CustomerLastViewedDate" Type="datetime" Precision="0" />
+          <Property Name="CreateDate" Type="datetime" Precision="0" />
+          <Property Name="ClosedDate" Type="datetime" Precision="1" />
+          <Property Name="ClosedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="transactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="AccountId" Type="int" />
+          <Property Name="InvoiceId" Type="int" />
+          <Property Name="Date" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Amount" Type="double" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CardHolder" Type="varchar" MaxLength="50" />
+          <Property Name="CardNumber" Type="varchar" MaxLength="20" />
+          <Property Name="DpsTxnRef" Type="varchar" MaxLength="20" />
+          <Property Name="DpsResponse" Type="varchar" MaxLength="20" />
+          <Property Name="TxnMac" Type="varchar" MaxLength="20" />
+          <Property Name="OperatedBy" Type="int" Nullable="false" />
+          <Property Name="OperatedDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Memo" Type="text" />
+        </EntityType>
+        <EntityType Name="userclaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ClaimType" Type="longtext" />
+          <Property Name="ClaimValue" Type="longtext" />
+        </EntityType>
+        <EntityType Name="userlogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userroles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="None" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="EmailConfirmed" Type="bool" Nullable="false" />
+          <Property Name="PasswordHash" Type="longtext" />
+          <Property Name="SecurityStamp" Type="longtext" />
+          <Property Name="PhoneNumber" Type="longtext" />
+          <Property Name="PhoneNumberConfirmed" Type="bool" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bool" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" Precision="0" />
+          <Property Name="LockoutEnabled" Type="bool" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="void_invoices">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="InvoiceId" Type="int" Nullable="false" />
+          <Property Name="VoidBy" Type="int" Nullable="false" />
+          <Property Name="VoidDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="JsonData" Type="longtext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="warnings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Module" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Operate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="AccountId" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="CreateDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="ClearBy" Type="int" />
+          <Property Name="ClearDate" Type="datetime" Precision="0" />
+        </EntityType>
+        <Association Name="account_balance_records_ibfk_1">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="1" />
+          <End Role="account_balance_records" Type="Self.account_balance_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="account_balance_records">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="accounts_ibfk_1">
+          <End Role="customers" Type="Self.customers" Multiplicity="1" />
+          <End Role="accounts" Type="Self.accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="accounts">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="accounts_ibfk_2">
+          <End Role="branches" Type="Self.branches" Multiplicity="1" />
+          <End Role="accounts" Type="Self.accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branches">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="accounts">
+              <PropertyRef Name="RegisterBranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="accounts_ibfk_3">
+          <End Role="branches" Type="Self.branches" Multiplicity="1" />
+          <End Role="accounts" Type="Self.accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branches">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="accounts">
+              <PropertyRef Name="ChargeBranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="addon_charge_records_ibfk_1">
+          <End Role="external_bill_files" Type="Self.external_bill_files" Multiplicity="1" />
+          <End Role="addon_charge_records" Type="Self.addon_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="external_bill_files">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="addon_charge_records">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="addon_charge_records_ibfk_4">
+          <End Role="services" Type="Self.services" Multiplicity="0..1" />
+          <End Role="addon_charge_records" Type="Self.addon_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="services">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="addon_charge_records">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="addon_charge_records_ibfk_5">
+          <End Role="invoices" Type="Self.invoices" Multiplicity="0..1" />
+          <End Role="addon_charge_records" Type="Self.addon_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="addon_charge_records">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="addon_charge_records_ibfk_6">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="0..1" />
+          <End Role="addon_charge_records" Type="Self.addon_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="addon_charge_records">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="adjustments_ibfk_7">
+          <End Role="invoices" Type="Self.invoices" Multiplicity="0..1" />
+          <End Role="adjustments" Type="Self.adjustments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="adjustments">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="adjustments_ibfk_8">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="1" />
+          <End Role="adjustments" Type="Self.adjustments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="adjustments">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUser_Claims">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="userclaims" Type="Self.userclaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="userclaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUser_Logins">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="userlogins" Type="Self.userlogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="userlogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUser_Roles">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="userroles" Type="Self.userroles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="userroles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_charge_records_ibfk_1">
+          <End Role="services" Type="Self.services" Multiplicity="1" />
+          <End Role="calling_charge_records" Type="Self.calling_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="services">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_charge_records">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_charge_records_ibfk_2">
+          <End Role="invoices" Type="Self.invoices" Multiplicity="0..1" />
+          <End Role="calling_charge_records" Type="Self.calling_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_charge_records">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_charge_records_ibfk_3">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="1" />
+          <End Role="calling_charge_records" Type="Self.calling_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_charge_records">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_international_region_details_ibfk_1">
+          <End Role="calling_international_regions" Type="Self.calling_international_regions" Multiplicity="1" />
+          <End Role="calling_international_region_details" Type="Self.calling_international_region_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="calling_international_regions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_international_region_details">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_records_ibfk_1">
+          <End Role="external_bill_files" Type="Self.external_bill_files" Multiplicity="1" />
+          <End Role="calling_records" Type="Self.calling_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="external_bill_files">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_records">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_records_ibfk_10">
+          <End Role="calling_charge_records" Type="Self.calling_charge_records" Multiplicity="0..1" />
+          <End Role="calling_records" Type="Self.calling_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="calling_charge_records">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_records">
+              <PropertyRef Name="ChargeRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_records_ibfk_4">
+          <End Role="services" Type="Self.services" Multiplicity="0..1" />
+          <End Role="calling_records" Type="Self.calling_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="services">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_records">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_records_ibfk_7">
+          <End Role="service_usage_offers" Type="Self.service_usage_offers" Multiplicity="0..1" />
+          <End Role="calling_records" Type="Self.calling_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service_usage_offers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_records">
+              <PropertyRef Name="OfferId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipments_ibfk_2">
+          <End Role="equipment_models" Type="Self.equipment_models" Multiplicity="0..1" />
+          <End Role="equipments" Type="Self.equipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="equipment_models">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="equipments">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipments_ibfk_3">
+          <End Role="products" Type="Self.products" Multiplicity="0..1" />
+          <End Role="equipments" Type="Self.equipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="equipments">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IdentityRole_Users">
+          <End Role="roles" Type="Self.roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="userroles" Type="Self.userroles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="userroles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="invoices_ibfk_1">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="1" />
+          <End Role="invoices" Type="Self.invoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="invoices">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="product_charge_records_ibfk_1">
+          <End Role="invoices" Type="Self.invoices" Multiplicity="0..1" />
+          <End Role="product_charge_records" Type="Self.product_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_charge_records">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="product_charge_records_ibfk_2">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="product_charge_records" Type="Self.product_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_charge_records">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="product_charge_records_ibfk_3">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="1" />
+          <End Role="product_charge_records" Type="Self.product_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_charge_records">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="products_ibfk_1">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="service_usage_offers_ibfk_2">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="service_usage_offers" Type="Self.service_usage_offers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="service_usage_offers">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="service_usage_offers_ibfk_3">
+          <End Role="calling_international_regions" Type="Self.calling_international_regions" Multiplicity="0..1" />
+          <End Role="service_usage_offers" Type="Self.service_usage_offers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="calling_international_regions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="service_usage_offers">
+              <PropertyRef Name="CallingRegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="services_ibfk_1">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="services" Type="Self.services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="services">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ticket_comments_ibfk_1">
+          <End Role="tickets" Type="Self.tickets" Multiplicity="1" />
+          <End Role="ticket_comments" Type="Self.ticket_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tickets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ticket_comments">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ticket_comments_ibfk_2">
+          <End Role="customers" Type="Self.customers" Multiplicity="0..1" />
+          <End Role="ticket_comments" Type="Self.ticket_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ticket_comments">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ticket_comments_ibfk_3">
+          <End Role="staffs" Type="Self.staffs" Multiplicity="0..1" />
+          <End Role="ticket_comments" Type="Self.ticket_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staffs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ticket_comments">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tickets_ibfk_1">
+          <End Role="customers" Type="Self.customers" Multiplicity="0..1" />
+          <End Role="tickets" Type="Self.tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tickets">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tickets_ibfk_2">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="0..1" />
+          <End Role="tickets" Type="Self.tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tickets">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="transactions_ibfk_4">
+          <End Role="invoices" Type="Self.invoices" Multiplicity="0..1" />
+          <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="transactions">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="transactions_ibfk_5">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="0..1" />
+          <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="transactions">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NewEntitiesStoreContainer">
+          <EntitySet Name="account_balance_records" EntityType="Self.account_balance_records" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="accounts" EntityType="Self.accounts" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="addon_charge_records" EntityType="Self.addon_charge_records" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="adjustments" EntityType="Self.adjustments" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="branches" EntityType="Self.branches" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="calling_charge_records" EntityType="Self.calling_charge_records" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="calling_international_region_details" EntityType="Self.calling_international_region_details" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="calling_international_regions" EntityType="Self.calling_international_regions" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="calling_offers" EntityType="Self.calling_offers" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="calling_rates_pstn" EntityType="Self.calling_rates_pstn" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="calling_records" EntityType="Self.calling_records" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="customers" EntityType="Self.customers" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="equipment_models" EntityType="Self.equipment_models" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="equipments" EntityType="Self.equipments" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="external_bill_addon_converters" EntityType="Self.external_bill_addon_converters" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="external_bill_files" EntityType="Self.external_bill_files" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="invoices" EntityType="Self.invoices" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="plans" EntityType="Self.plans" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="product_charge_records" EntityType="Self.product_charge_records" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="service_usage_offers" EntityType="Self.service_usage_offers" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="services" EntityType="Self.services" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="staffs" EntityType="Self.staffs" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="ticket_comments" EntityType="Self.ticket_comments" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="tickets" EntityType="Self.tickets" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="transactions" EntityType="Self.transactions" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="userclaims" EntityType="Self.userclaims" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="userlogins" EntityType="Self.userlogins" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="userroles" EntityType="Self.userroles" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="void_invoices" EntityType="Self.void_invoices" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="warnings" EntityType="Self.warnings" Schema="cyberpark" store:Type="Tables" />
+          <EntitySet Name="calling_rates_voip" EntityType="Self.calling_rates_voip" store:Type="Tables" store:Schema="cyberpark">
+            <DefiningQuery>SELECT
+`calling_rates_voip`.`Prefix`, 
+`calling_rates_voip`.`Type`, 
+`calling_rates_voip`.`AreaName`, 
+`calling_rates_voip`.`RatePerMinute`
+FROM `calling_rates_voip` AS `calling_rates_voip`</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="account_balance_records_ibfk_1" Association="Self.account_balance_records_ibfk_1">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="account_balance_records" EntitySet="account_balance_records" />
+          </AssociationSet>
+          <AssociationSet Name="accounts_ibfk_1" Association="Self.accounts_ibfk_1">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="accounts" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="accounts_ibfk_2" Association="Self.accounts_ibfk_2">
+            <End Role="branches" EntitySet="branches" />
+            <End Role="accounts" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="accounts_ibfk_3" Association="Self.accounts_ibfk_3">
+            <End Role="branches" EntitySet="branches" />
+            <End Role="accounts" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="addon_charge_records_ibfk_1" Association="Self.addon_charge_records_ibfk_1">
+            <End Role="external_bill_files" EntitySet="external_bill_files" />
+            <End Role="addon_charge_records" EntitySet="addon_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="addon_charge_records_ibfk_4" Association="Self.addon_charge_records_ibfk_4">
+            <End Role="services" EntitySet="services" />
+            <End Role="addon_charge_records" EntitySet="addon_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="addon_charge_records_ibfk_5" Association="Self.addon_charge_records_ibfk_5">
+            <End Role="invoices" EntitySet="invoices" />
+            <End Role="addon_charge_records" EntitySet="addon_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="addon_charge_records_ibfk_6" Association="Self.addon_charge_records_ibfk_6">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="addon_charge_records" EntitySet="addon_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="adjustments_ibfk_7" Association="Self.adjustments_ibfk_7">
+            <End Role="invoices" EntitySet="invoices" />
+            <End Role="adjustments" EntitySet="adjustments" />
+          </AssociationSet>
+          <AssociationSet Name="adjustments_ibfk_8" Association="Self.adjustments_ibfk_8">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="adjustments" EntitySet="adjustments" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUser_Claims" Association="Self.ApplicationUser_Claims">
+            <End Role="users" EntitySet="users" />
+            <End Role="userclaims" EntitySet="userclaims" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUser_Logins" Association="Self.ApplicationUser_Logins">
+            <End Role="users" EntitySet="users" />
+            <End Role="userlogins" EntitySet="userlogins" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUser_Roles" Association="Self.ApplicationUser_Roles">
+            <End Role="users" EntitySet="users" />
+            <End Role="userroles" EntitySet="userroles" />
+          </AssociationSet>
+          <AssociationSet Name="calling_charge_records_ibfk_1" Association="Self.calling_charge_records_ibfk_1">
+            <End Role="services" EntitySet="services" />
+            <End Role="calling_charge_records" EntitySet="calling_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_charge_records_ibfk_2" Association="Self.calling_charge_records_ibfk_2">
+            <End Role="invoices" EntitySet="invoices" />
+            <End Role="calling_charge_records" EntitySet="calling_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_charge_records_ibfk_3" Association="Self.calling_charge_records_ibfk_3">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="calling_charge_records" EntitySet="calling_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_international_region_details_ibfk_1" Association="Self.calling_international_region_details_ibfk_1">
+            <End Role="calling_international_regions" EntitySet="calling_international_regions" />
+            <End Role="calling_international_region_details" EntitySet="calling_international_region_details" />
+          </AssociationSet>
+          <AssociationSet Name="calling_records_ibfk_1" Association="Self.calling_records_ibfk_1">
+            <End Role="external_bill_files" EntitySet="external_bill_files" />
+            <End Role="calling_records" EntitySet="calling_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_records_ibfk_10" Association="Self.calling_records_ibfk_10">
+            <End Role="calling_charge_records" EntitySet="calling_charge_records" />
+            <End Role="calling_records" EntitySet="calling_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_records_ibfk_4" Association="Self.calling_records_ibfk_4">
+            <End Role="services" EntitySet="services" />
+            <End Role="calling_records" EntitySet="calling_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_records_ibfk_7" Association="Self.calling_records_ibfk_7">
+            <End Role="service_usage_offers" EntitySet="service_usage_offers" />
+            <End Role="calling_records" EntitySet="calling_records" />
+          </AssociationSet>
+          <AssociationSet Name="equipments_ibfk_2" Association="Self.equipments_ibfk_2">
+            <End Role="equipment_models" EntitySet="equipment_models" />
+            <End Role="equipments" EntitySet="equipments" />
+          </AssociationSet>
+          <AssociationSet Name="equipments_ibfk_3" Association="Self.equipments_ibfk_3">
+            <End Role="products" EntitySet="products" />
+            <End Role="equipments" EntitySet="equipments" />
+          </AssociationSet>
+          <AssociationSet Name="IdentityRole_Users" Association="Self.IdentityRole_Users">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="userroles" EntitySet="userroles" />
+          </AssociationSet>
+          <AssociationSet Name="invoices_ibfk_1" Association="Self.invoices_ibfk_1">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="invoices" EntitySet="invoices" />
+          </AssociationSet>
+          <AssociationSet Name="product_charge_records_ibfk_1" Association="Self.product_charge_records_ibfk_1">
+            <End Role="invoices" EntitySet="invoices" />
+            <End Role="product_charge_records" EntitySet="product_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="product_charge_records_ibfk_2" Association="Self.product_charge_records_ibfk_2">
+            <End Role="products" EntitySet="products" />
+            <End Role="product_charge_records" EntitySet="product_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="product_charge_records_ibfk_3" Association="Self.product_charge_records_ibfk_3">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="product_charge_records" EntitySet="product_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="products_ibfk_1" Association="Self.products_ibfk_1">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="service_usage_offers_ibfk_2" Association="Self.service_usage_offers_ibfk_2">
+            <End Role="products" EntitySet="products" />
+            <End Role="service_usage_offers" EntitySet="service_usage_offers" />
+          </AssociationSet>
+          <AssociationSet Name="service_usage_offers_ibfk_3" Association="Self.service_usage_offers_ibfk_3">
+            <End Role="calling_international_regions" EntitySet="calling_international_regions" />
+            <End Role="service_usage_offers" EntitySet="service_usage_offers" />
+          </AssociationSet>
+          <AssociationSet Name="services_ibfk_1" Association="Self.services_ibfk_1">
+            <End Role="products" EntitySet="products" />
+            <End Role="services" EntitySet="services" />
+          </AssociationSet>
+          <AssociationSet Name="ticket_comments_ibfk_1" Association="Self.ticket_comments_ibfk_1">
+            <End Role="tickets" EntitySet="tickets" />
+            <End Role="ticket_comments" EntitySet="ticket_comments" />
+          </AssociationSet>
+          <AssociationSet Name="ticket_comments_ibfk_2" Association="Self.ticket_comments_ibfk_2">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="ticket_comments" EntitySet="ticket_comments" />
+          </AssociationSet>
+          <AssociationSet Name="ticket_comments_ibfk_3" Association="Self.ticket_comments_ibfk_3">
+            <End Role="staffs" EntitySet="staffs" />
+            <End Role="ticket_comments" EntitySet="ticket_comments" />
+          </AssociationSet>
+          <AssociationSet Name="tickets_ibfk_1" Association="Self.tickets_ibfk_1">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="tickets" EntitySet="tickets" />
+          </AssociationSet>
+          <AssociationSet Name="tickets_ibfk_2" Association="Self.tickets_ibfk_2">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="tickets" EntitySet="tickets" />
+          </AssociationSet>
+          <AssociationSet Name="transactions_ibfk_4" Association="Self.transactions_ibfk_4">
+            <End Role="invoices" EntitySet="invoices" />
+            <End Role="transactions" EntitySet="transactions" />
+          </AssociationSet>
+          <AssociationSet Name="transactions_ibfk_5" Association="Self.transactions_ibfk_5">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="transactions" EntitySet="transactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Entities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NewEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="account_balance_records" EntityType="Entities.account_balance_records" />
+          <EntitySet Name="accounts" EntityType="Entities.account" />
+          <EntitySet Name="addon_charge_records" EntityType="Entities.addon_charge_records" />
+          <EntitySet Name="adjustments" EntityType="Entities.adjustment" />
+          <EntitySet Name="branches" EntityType="Entities.branch" />
+          <EntitySet Name="calling_charge_records" EntityType="Entities.calling_charge_records" />
+          <EntitySet Name="calling_international_region_details" EntityType="Entities.calling_international_region_details" />
+          <EntitySet Name="calling_international_regions" EntityType="Entities.calling_international_regions" />
+          <EntitySet Name="calling_offers" EntityType="Entities.calling_offers" />
+          <EntitySet Name="calling_rates_pstn" EntityType="Entities.calling_rates_pstn" />
+          <EntitySet Name="calling_records" EntityType="Entities.calling_records" />
+          <EntitySet Name="customers" EntityType="Entities.customer" />
+          <EntitySet Name="equipment_models" EntityType="Entities.equipment_models" />
+          <EntitySet Name="equipments" EntityType="Entities.equipment" />
+          <EntitySet Name="external_bill_addon_converters" EntityType="Entities.external_bill_addon_converters" />
+          <EntitySet Name="external_bill_files" EntityType="Entities.external_bill_files" />
+          <EntitySet Name="invoices" EntityType="Entities.invoice" />
+          <EntitySet Name="plans" EntityType="Entities.plan" />
+          <EntitySet Name="product_charge_records" EntityType="Entities.product_charge_records" />
+          <EntitySet Name="products" EntityType="Entities.product" />
+          <EntitySet Name="roles" EntityType="Entities.role" />
+          <EntitySet Name="service_usage_offers" EntityType="Entities.service_usage_offers" />
+          <EntitySet Name="services" EntityType="Entities.service" />
+          <EntitySet Name="staffs" EntityType="Entities.staff" />
+          <EntitySet Name="ticket_comments" EntityType="Entities.ticket_comments" />
+          <EntitySet Name="tickets" EntityType="Entities.ticket" />
+          <EntitySet Name="transactions" EntityType="Entities.transaction" />
+          <EntitySet Name="userclaims" EntityType="Entities.userclaim" />
+          <EntitySet Name="userlogins" EntityType="Entities.userlogin" />
+          <EntitySet Name="users" EntityType="Entities.user" />
+          <EntitySet Name="void_invoices" EntityType="Entities.void_invoices" />
+          <EntitySet Name="warnings" EntityType="Entities.warning" />
+          <EntitySet Name="calling_rates_voip" EntityType="Entities.calling_rates_voip" />
+          <AssociationSet Name="account_balance_records_ibfk_1" Association="Entities.account_balance_records_ibfk_1">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="account_balance_records" EntitySet="account_balance_records" />
+          </AssociationSet>
+          <AssociationSet Name="accounts_ibfk_1" Association="Entities.accounts_ibfk_1">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="account" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="accounts_ibfk_2" Association="Entities.accounts_ibfk_2">
+            <End Role="branch" EntitySet="branches" />
+            <End Role="account" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="accounts_ibfk_3" Association="Entities.accounts_ibfk_3">
+            <End Role="branch" EntitySet="branches" />
+            <End Role="account" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="addon_charge_records_ibfk_6" Association="Entities.addon_charge_records_ibfk_6">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="addon_charge_records" EntitySet="addon_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="adjustments_ibfk_8" Association="Entities.adjustments_ibfk_8">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="adjustment" EntitySet="adjustments" />
+          </AssociationSet>
+          <AssociationSet Name="calling_charge_records_ibfk_3" Association="Entities.calling_charge_records_ibfk_3">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="calling_charge_records" EntitySet="calling_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="invoices_ibfk_1" Association="Entities.invoices_ibfk_1">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="invoice" EntitySet="invoices" />
+          </AssociationSet>
+          <AssociationSet Name="product_charge_records_ibfk_3" Association="Entities.product_charge_records_ibfk_3">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="product_charge_records" EntitySet="product_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="products_ibfk_1" Association="Entities.products_ibfk_1">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="tickets_ibfk_2" Association="Entities.tickets_ibfk_2">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="ticket" EntitySet="tickets" />
+          </AssociationSet>
+          <AssociationSet Name="transactions_ibfk_5" Association="Entities.transactions_ibfk_5">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="transaction" EntitySet="transactions" />
+          </AssociationSet>
+          <AssociationSet Name="addon_charge_records_ibfk_1" Association="Entities.addon_charge_records_ibfk_1">
+            <End Role="external_bill_files" EntitySet="external_bill_files" />
+            <End Role="addon_charge_records" EntitySet="addon_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="addon_charge_records_ibfk_4" Association="Entities.addon_charge_records_ibfk_4">
+            <End Role="service" EntitySet="services" />
+            <End Role="addon_charge_records" EntitySet="addon_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="addon_charge_records_ibfk_5" Association="Entities.addon_charge_records_ibfk_5">
+            <End Role="invoice" EntitySet="invoices" />
+            <End Role="addon_charge_records" EntitySet="addon_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="adjustments_ibfk_7" Association="Entities.adjustments_ibfk_7">
+            <End Role="invoice" EntitySet="invoices" />
+            <End Role="adjustment" EntitySet="adjustments" />
+          </AssociationSet>
+          <AssociationSet Name="calling_charge_records_ibfk_1" Association="Entities.calling_charge_records_ibfk_1">
+            <End Role="service" EntitySet="services" />
+            <End Role="calling_charge_records" EntitySet="calling_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_charge_records_ibfk_2" Association="Entities.calling_charge_records_ibfk_2">
+            <End Role="invoice" EntitySet="invoices" />
+            <End Role="calling_charge_records" EntitySet="calling_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_records_ibfk_10" Association="Entities.calling_records_ibfk_10">
+            <End Role="calling_charge_records" EntitySet="calling_charge_records" />
+            <End Role="calling_records" EntitySet="calling_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_international_region_details_ibfk_1" Association="Entities.calling_international_region_details_ibfk_1">
+            <End Role="calling_international_regions" EntitySet="calling_international_regions" />
+            <End Role="calling_international_region_details" EntitySet="calling_international_region_details" />
+          </AssociationSet>
+          <AssociationSet Name="service_usage_offers_ibfk_3" Association="Entities.service_usage_offers_ibfk_3">
+            <End Role="calling_international_regions" EntitySet="calling_international_regions" />
+            <End Role="service_usage_offers" EntitySet="service_usage_offers" />
+          </AssociationSet>
+          <AssociationSet Name="calling_records_ibfk_1" Association="Entities.calling_records_ibfk_1">
+            <End Role="external_bill_files" EntitySet="external_bill_files" />
+            <End Role="calling_records" EntitySet="calling_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_records_ibfk_4" Association="Entities.calling_records_ibfk_4">
+            <End Role="service" EntitySet="services" />
+            <End Role="calling_records" EntitySet="calling_records" />
+          </AssociationSet>
+          <AssociationSet Name="calling_records_ibfk_7" Association="Entities.calling_records_ibfk_7">
+            <End Role="service_usage_offers" EntitySet="service_usage_offers" />
+            <End Role="calling_records" EntitySet="calling_records" />
+          </AssociationSet>
+          <AssociationSet Name="ticket_comments_ibfk_2" Association="Entities.ticket_comments_ibfk_2">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="ticket_comments" EntitySet="ticket_comments" />
+          </AssociationSet>
+          <AssociationSet Name="tickets_ibfk_1" Association="Entities.tickets_ibfk_1">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="ticket" EntitySet="tickets" />
+          </AssociationSet>
+          <AssociationSet Name="equipments_ibfk_2" Association="Entities.equipments_ibfk_2">
+            <End Role="equipment_models" EntitySet="equipment_models" />
+            <End Role="equipment" EntitySet="equipments" />
+          </AssociationSet>
+          <AssociationSet Name="equipments_ibfk_3" Association="Entities.equipments_ibfk_3">
+            <End Role="product" EntitySet="products" />
+            <End Role="equipment" EntitySet="equipments" />
+          </AssociationSet>
+          <AssociationSet Name="product_charge_records_ibfk_1" Association="Entities.product_charge_records_ibfk_1">
+            <End Role="invoice" EntitySet="invoices" />
+            <End Role="product_charge_records" EntitySet="product_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="transactions_ibfk_4" Association="Entities.transactions_ibfk_4">
+            <End Role="invoice" EntitySet="invoices" />
+            <End Role="transaction" EntitySet="transactions" />
+          </AssociationSet>
+          <AssociationSet Name="product_charge_records_ibfk_2" Association="Entities.product_charge_records_ibfk_2">
+            <End Role="product" EntitySet="products" />
+            <End Role="product_charge_records" EntitySet="product_charge_records" />
+          </AssociationSet>
+          <AssociationSet Name="service_usage_offers_ibfk_2" Association="Entities.service_usage_offers_ibfk_2">
+            <End Role="product" EntitySet="products" />
+            <End Role="service_usage_offers" EntitySet="service_usage_offers" />
+          </AssociationSet>
+          <AssociationSet Name="services_ibfk_1" Association="Entities.services_ibfk_1">
+            <End Role="product" EntitySet="products" />
+            <End Role="service" EntitySet="services" />
+          </AssociationSet>
+          <AssociationSet Name="ticket_comments_ibfk_3" Association="Entities.ticket_comments_ibfk_3">
+            <End Role="staff" EntitySet="staffs" />
+            <End Role="ticket_comments" EntitySet="ticket_comments" />
+          </AssociationSet>
+          <AssociationSet Name="ticket_comments_ibfk_1" Association="Entities.ticket_comments_ibfk_1">
+            <End Role="ticket" EntitySet="tickets" />
+            <End Role="ticket_comments" EntitySet="ticket_comments" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUser_Claims" Association="Entities.ApplicationUser_Claims">
+            <End Role="user" EntitySet="users" />
+            <End Role="userclaim" EntitySet="userclaims" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUser_Logins" Association="Entities.ApplicationUser_Logins">
+            <End Role="user" EntitySet="users" />
+            <End Role="userlogin" EntitySet="userlogins" />
+          </AssociationSet>
+          <AssociationSet Name="userroles" Association="Entities.userroles">
+            <End Role="user" EntitySet="users" />
+            <End Role="role" EntitySet="roles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="account_balance_records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="PreviousBalance" Type="Double" Nullable="false" />
+          <Property Name="TransactionId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="AdjustmentId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="InvoiceId" Type="Int32" />
+          <Property Name="Operate" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Double" Nullable="false" />
+          <Property Name="CurrentBalance" Type="Double" Nullable="false" />
+          <Property Name="OperateDate" Type="DateTime" Nullable="false" />
+          <Property Name="Memo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="account" Relationship="Entities.account_balance_records_ibfk_1" FromRole="account_balance_records" ToRole="account" />
+        </EntityType>
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="RegisterBranchId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ChargeBranchId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="InvoicePeriodType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NextInvoiceIssueDate" Type="DateTime" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizationName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdentityType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdentityNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Balance" Type="Double" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="account_balance_records" Relationship="Entities.account_balance_records_ibfk_1" FromRole="account" ToRole="account_balance_records" />
+          <NavigationProperty Name="customer" Relationship="Entities.accounts_ibfk_1" FromRole="account" ToRole="customer" />
+          <NavigationProperty Name="branch" Relationship="Entities.accounts_ibfk_2" FromRole="account" ToRole="branch" />
+          <NavigationProperty Name="branch1" Relationship="Entities.accounts_ibfk_3" FromRole="account" ToRole="branch" />
+          <NavigationProperty Name="addon_charge_records" Relationship="Entities.addon_charge_records_ibfk_6" FromRole="account" ToRole="addon_charge_records" />
+          <NavigationProperty Name="adjustments" Relationship="Entities.adjustments_ibfk_8" FromRole="account" ToRole="adjustment" />
+          <NavigationProperty Name="calling_charge_records" Relationship="Entities.calling_charge_records_ibfk_3" FromRole="account" ToRole="calling_charge_records" />
+          <NavigationProperty Name="invoices" Relationship="Entities.invoices_ibfk_1" FromRole="account" ToRole="invoice" />
+          <NavigationProperty Name="product_charge_records" Relationship="Entities.product_charge_records_ibfk_3" FromRole="account" ToRole="product_charge_records" />
+          <NavigationProperty Name="products" Relationship="Entities.products_ibfk_1" FromRole="account" ToRole="product" />
+          <NavigationProperty Name="tickets" Relationship="Entities.tickets_ibfk_2" FromRole="account" ToRole="ticket" />
+          <NavigationProperty Name="transactions" Relationship="Entities.transactions_ibfk_5" FromRole="account" ToRole="transaction" />
+        </EntityType>
+        <EntityType Name="addon_charge_records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FileId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ChargeDate" Type="DateTime" Nullable="false" />
+          <Property Name="OriNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateFrom" Type="DateTime" Nullable="false" />
+          <Property Name="DateTo" Type="DateTime" />
+          <Property Name="Cost" Type="Double" Nullable="false" />
+          <Property Name="Charge" Type="Double" Nullable="false" />
+          <Property Name="ServiceId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AccountId" Type="Int32" />
+          <Property Name="InvoiceId" Type="Int32" />
+          <Property Name="Ignored" Type="Boolean" Nullable="false" />
+          <Property Name="IgnoredBy" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Warning" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Memo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="account" Relationship="Entities.addon_charge_records_ibfk_6" FromRole="addon_charge_records" ToRole="account" />
+          <NavigationProperty Name="external_bill_files" Relationship="Entities.addon_charge_records_ibfk_1" FromRole="addon_charge_records" ToRole="external_bill_files" />
+          <NavigationProperty Name="service" Relationship="Entities.addon_charge_records_ibfk_4" FromRole="addon_charge_records" ToRole="service" />
+          <NavigationProperty Name="invoice" Relationship="Entities.addon_charge_records_ibfk_5" FromRole="addon_charge_records" ToRole="invoice" />
+        </EntityType>
+        <EntityType Name="adjustment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceId" Type="Int32" />
+          <Property Name="Amount" Type="Double" Nullable="false" />
+          <Property Name="Memo" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="OperatedBy" Type="Int32" Nullable="false" />
+          <Property Name="OperatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="account" Relationship="Entities.adjustments_ibfk_8" FromRole="adjustment" ToRole="account" />
+          <NavigationProperty Name="invoice" Relationship="Entities.adjustments_ibfk_7" FromRole="adjustment" ToRole="invoice" />
+        </EntityType>
+        <EntityType Name="branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="accounts" Relationship="Entities.accounts_ibfk_2" FromRole="branch" ToRole="account" />
+          <NavigationProperty Name="accounts1" Relationship="Entities.accounts_ibfk_3" FromRole="branch" ToRole="account" />
+        </EntityType>
+        <EntityType Name="calling_charge_records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="DateFrom" Type="DateTime" Nullable="false" />
+          <Property Name="DateTo" Type="DateTime" Nullable="false" />
+          <Property Name="Cost" Type="Double" Nullable="false" />
+          <Property Name="Charge" Type="Double" Nullable="false" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceId" Type="Int32" />
+          <Property Name="OperatedDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="account" Relationship="Entities.calling_charge_records_ibfk_3" FromRole="calling_charge_records" ToRole="account" />
+          <NavigationProperty Name="service" Relationship="Entities.calling_charge_records_ibfk_1" FromRole="calling_charge_records" ToRole="service" />
+          <NavigationProperty Name="invoice" Relationship="Entities.calling_charge_records_ibfk_2" FromRole="calling_charge_records" ToRole="invoice" />
+          <NavigationProperty Name="calling_records" Relationship="Entities.calling_records_ibfk_10" FromRole="calling_charge_records" ToRole="calling_records" />
+        </EntityType>
+        <EntityType Name="calling_international_region_details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="RegionId" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CountryName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncludeMobile" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="calling_international_regions" Relationship="Entities.calling_international_region_details_ibfk_1" FromRole="calling_international_region_details" ToRole="calling_international_regions" />
+        </EntityType>
+        <EntityType Name="calling_international_regions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="calling_international_region_details" Relationship="Entities.calling_international_region_details_ibfk_1" FromRole="calling_international_regions" ToRole="calling_international_region_details" />
+          <NavigationProperty Name="service_usage_offers" Relationship="Entities.service_usage_offers_ibfk_3" FromRole="calling_international_regions" ToRole="service_usage_offers" />
+        </EntityType>
+        <EntityType Name="calling_offers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Minutes" Type="Int32" Nullable="false" />
+          <Property Name="Local" Type="Boolean" Nullable="false" />
+          <Property Name="National" Type="Boolean" Nullable="false" />
+          <Property Name="Mobile" Type="Boolean" Nullable="false" />
+          <Property Name="CallingRegionId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="OperatorId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="calling_rates_pstn">
+          <Key>
+            <PropertyRef Name="Prefix" />
+            <PropertyRef Name="Type" />
+          </Key>
+          <Property Name="Prefix" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AreaName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RatePerMinute" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="calling_records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FileId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="OriNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DesNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AreaPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AreaName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsMobile" Type="Boolean" Nullable="false" />
+          <Property Name="CallStart" Type="DateTime" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="Cost" Type="Double" Nullable="false" />
+          <Property Name="RatePerMinute" Type="Double" Nullable="false" />
+          <Property Name="ChargeMinute" Type="Int32" Nullable="false" />
+          <Property Name="Charge" Type="Double" Nullable="false" />
+          <Property Name="ActualChargeMiute" Type="Int32" />
+          <Property Name="ActualCharge" Type="Double" />
+          <Property Name="OfferId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ChargeRecordId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Ignored" Type="Boolean" Nullable="false" />
+          <Property Name="IgnoredBy" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Warning" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Memo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="calling_charge_records" Relationship="Entities.calling_records_ibfk_10" FromRole="calling_records" ToRole="calling_charge_records" />
+          <NavigationProperty Name="external_bill_files" Relationship="Entities.calling_records_ibfk_1" FromRole="calling_records" ToRole="external_bill_files" />
+          <NavigationProperty Name="service" Relationship="Entities.calling_records_ibfk_4" FromRole="calling_records" ToRole="service" />
+          <NavigationProperty Name="service_usage_offers" Relationship="Entities.calling_records_ibfk_7" FromRole="calling_records" ToRole="service_usage_offers" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdentityType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdentityNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SignUpDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="accounts" Relationship="Entities.accounts_ibfk_1" FromRole="customer" ToRole="account" />
+          <NavigationProperty Name="ticket_comments" Relationship="Entities.ticket_comments_ibfk_2" FromRole="customer" ToRole="ticket_comments" />
+          <NavigationProperty Name="tickets" Relationship="Entities.tickets_ibfk_1" FromRole="customer" ToRole="ticket" />
+        </EntityType>
+        <EntityType Name="equipment_models">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="equipments" Relationship="Entities.equipments_ibfk_2" FromRole="equipment_models" ToRole="equipment" />
+        </EntityType>
+        <EntityType Name="equipment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ModelId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="StoredDate" Type="DateTime" Nullable="false" />
+          <Property Name="ProductId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="DispatchedDate" Type="DateTime" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="equipment_models" Relationship="Entities.equipments_ibfk_2" FromRole="equipment" ToRole="equipment_models" />
+          <NavigationProperty Name="product" Relationship="Entities.equipments_ibfk_3" FromRole="equipment" ToRole="product" />
+        </EntityType>
+        <EntityType Name="external_bill_addon_converters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Keywords" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayAs" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="IsDisplay" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="external_bill_files">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="CallOriNumberCount" Type="Int32" Nullable="false" />
+          <Property Name="CallRecordCount" Type="Int32" Nullable="false" />
+          <Property Name="CallTotalCost" Type="Double" />
+          <Property Name="CallDateFrom" Type="DateTime" />
+          <Property Name="CallDateTo" Type="DateTime" />
+          <Property Name="AddonOriNumberCount" Type="Int32" />
+          <Property Name="AddonRecordCount" Type="Int32" />
+          <Property Name="AddonTotalCost" Type="Double" />
+          <Property Name="AddonDateFrom" Type="DateTime" />
+          <Property Name="AddonDateTo" Type="DateTime" />
+          <Property Name="Size" Type="Double" Nullable="false" />
+          <Property Name="OperatedBy" Type="Int32" Nullable="false" />
+          <Property Name="OperatedDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="addon_charge_records" Relationship="Entities.addon_charge_records_ibfk_1" FromRole="external_bill_files" ToRole="addon_charge_records" />
+          <NavigationProperty Name="calling_records" Relationship="Entities.calling_records_ibfk_1" FromRole="external_bill_files" ToRole="calling_records" />
+        </EntityType>
+        <EntityType Name="invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="DateFrom" Type="DateTime" Nullable="false" />
+          <Property Name="DateTo" Type="DateTime" Nullable="false" />
+          <Property Name="PreviousBalance" Type="Double" Nullable="false" />
+          <Property Name="ChargeAmountExcludeGST" Type="Double" Nullable="false" />
+          <Property Name="GST" Type="Double" Nullable="false" />
+          <Property Name="ProductAmount" Type="Double" Nullable="false" />
+          <Property Name="AddonAmount" Type="Double" Nullable="false" />
+          <Property Name="CallingAmount" Type="Double" Nullable="false" />
+          <Property Name="AdjustAmount" Type="Double" Nullable="false" />
+          <Property Name="TransactionAmount" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IssuedBy" Type="Int32" Nullable="false" />
+          <Property Name="IssuedDate" Type="DateTime" Nullable="false" />
+          <Property Name="DisplayIssuedDate" Type="DateTime" Nullable="false" />
+          <Property Name="AutoDeliver" Type="Boolean" />
+          <Property Name="DeliveredDate" Type="DateTime" />
+          <NavigationProperty Name="account" Relationship="Entities.invoices_ibfk_1" FromRole="invoice" ToRole="account" />
+          <NavigationProperty Name="addon_charge_records" Relationship="Entities.addon_charge_records_ibfk_5" FromRole="invoice" ToRole="addon_charge_records" />
+          <NavigationProperty Name="adjustments" Relationship="Entities.adjustments_ibfk_7" FromRole="invoice" ToRole="adjustment" />
+          <NavigationProperty Name="calling_charge_records" Relationship="Entities.calling_charge_records_ibfk_2" FromRole="invoice" ToRole="calling_charge_records" />
+          <NavigationProperty Name="product_charge_records" Relationship="Entities.product_charge_records_ibfk_1" FromRole="invoice" ToRole="product_charge_records" />
+          <NavigationProperty Name="transactions" Relationship="Entities.transactions_ibfk_4" FromRole="invoice" ToRole="transaction" />
+        </EntityType>
+        <EntityType Name="plan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsBusiness" Type="Boolean" Nullable="false" />
+          <Property Name="BroadbandType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PstnCount" Type="Int32" Nullable="false" />
+          <Property Name="VoipCount" Type="Int32" Nullable="false" />
+          <Property Name="MonthsOfContract" Type="Int32" Nullable="false" />
+          <Property Name="MonthlyPrice" Type="Double" Nullable="false" />
+          <Property Name="NewConnectionCharge" Type="Double" Nullable="false" />
+          <Property Name="ModemPrice" Type="Double" Nullable="false" />
+          <Property Name="IsPromotion" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayPriority" Type="Int32" Nullable="false" />
+          <Property Name="Memo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product_charge_records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ProductId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="PreviousProductChargedToDate" Type="DateTime" />
+          <Property Name="CurrentProductChargedToDate" Type="DateTime" />
+          <Property Name="AmountGSTExclusive" Type="Double" Nullable="false" />
+          <Property Name="ChargedDate" Type="DateTime" Nullable="false" />
+          <Property Name="InvoiceId" Type="Int32" />
+          <Property Name="Memo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="account" Relationship="Entities.product_charge_records_ibfk_3" FromRole="product_charge_records" ToRole="account" />
+          <NavigationProperty Name="invoice" Relationship="Entities.product_charge_records_ibfk_1" FromRole="product_charge_records" ToRole="invoice" />
+          <NavigationProperty Name="product" Relationship="Entities.product_charge_records_ibfk_2" FromRole="product_charge_records" ToRole="product" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BasePriceGSTExclusive" Type="Double" Nullable="false" />
+          <Property Name="DiscountRate" Type="Double" Nullable="false" />
+          <Property Name="NumberOfMonthPerCharge" Type="Int32" Nullable="false" />
+          <Property Name="ServiceGivenDate" Type="DateTime" />
+          <Property Name="ChargedToDate" Type="DateTime" />
+          <Property Name="IsTermed" Type="Boolean" Nullable="false" />
+          <Property Name="TermStartDate" Type="DateTime" />
+          <Property Name="MonthsOfTerm" Type="Int32" />
+          <Property Name="IsOneOff" Type="Boolean" Nullable="false" />
+          <Property Name="OneOffChargeDate" Type="DateTime" />
+          <Property Name="HasOneOffCharged" Type="Boolean" />
+          <Property Name="AppliedDate" Type="DateTime" Nullable="false" />
+          <Property Name="PrepayMonths" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="account" Relationship="Entities.products_ibfk_1" FromRole="product" ToRole="account" />
+          <NavigationProperty Name="equipments" Relationship="Entities.equipments_ibfk_3" FromRole="product" ToRole="equipment" />
+          <NavigationProperty Name="product_charge_records" Relationship="Entities.product_charge_records_ibfk_2" FromRole="product" ToRole="product_charge_records" />
+          <NavigationProperty Name="service_usage_offers" Relationship="Entities.service_usage_offers_ibfk_2" FromRole="product" ToRole="service_usage_offers" />
+          <NavigationProperty Name="services" Relationship="Entities.services_ibfk_1" FromRole="product" ToRole="service" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="users" Relationship="Entities.userroles" FromRole="role" ToRole="user" />
+        </EntityType>
+        <EntityType Name="service_usage_offers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ProductId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceSubType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Minutes" Type="Int32" Nullable="false" />
+          <Property Name="DataFlow" Type="Int32" Nullable="false" />
+          <Property Name="Local" Type="Boolean" Nullable="false" />
+          <Property Name="National" Type="Boolean" Nullable="false" />
+          <Property Name="Mobile" Type="Boolean" Nullable="false" />
+          <Property Name="CallingRegionId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="OperatorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="calling_international_regions" Relationship="Entities.service_usage_offers_ibfk_3" FromRole="service_usage_offers" ToRole="calling_international_regions" />
+          <NavigationProperty Name="calling_records" Relationship="Entities.calling_records_ibfk_7" FromRole="service_usage_offers" ToRole="calling_records" />
+          <NavigationProperty Name="product" Relationship="Entities.service_usage_offers_ibfk_2" FromRole="service_usage_offers" ToRole="product" />
+        </EntityType>
+        <EntityType Name="service">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ProductId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SubType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdentityNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BroadbandSVLAN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BroadbandCVLAN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BroadbandPPPoeLoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BroadbandPPPoePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VoipPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VoipAssignedDate" Type="DateTime" />
+          <Property Name="ReadyForServiceDate" Type="DateTime" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="OperatorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="addon_charge_records" Relationship="Entities.addon_charge_records_ibfk_4" FromRole="service" ToRole="addon_charge_records" />
+          <NavigationProperty Name="calling_charge_records" Relationship="Entities.calling_charge_records_ibfk_1" FromRole="service" ToRole="calling_charge_records" />
+          <NavigationProperty Name="calling_records" Relationship="Entities.calling_records_ibfk_4" FromRole="service" ToRole="calling_records" />
+          <NavigationProperty Name="product" Relationship="Entities.services_ibfk_1" FromRole="service" ToRole="product" />
+        </EntityType>
+        <EntityType Name="staff">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="BranchId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ticket_comments" Relationship="Entities.ticket_comments_ibfk_3" FromRole="staff" ToRole="ticket_comments" />
+        </EntityType>
+        <EntityType Name="ticket_comments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="CommentDate" Type="DateTime" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="StaffId" Type="Int32" />
+          <NavigationProperty Name="customer" Relationship="Entities.ticket_comments_ibfk_2" FromRole="ticket_comments" ToRole="customer" />
+          <NavigationProperty Name="staff" Relationship="Entities.ticket_comments_ibfk_3" FromRole="ticket_comments" ToRole="staff" />
+          <NavigationProperty Name="ticket" Relationship="Entities.ticket_comments_ibfk_1" FromRole="ticket_comments" ToRole="ticket" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SubType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="AccountId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="StaffLastViewedDate" Type="DateTime" />
+          <Property Name="CustomerLastViewedDate" Type="DateTime" />
+          <Property Name="CreateDate" Type="DateTime" />
+          <Property Name="ClosedDate" Type="DateTime" />
+          <Property Name="ClosedBy" Type="Int32" />
+          <NavigationProperty Name="account" Relationship="Entities.tickets_ibfk_2" FromRole="ticket" ToRole="account" />
+          <NavigationProperty Name="customer" Relationship="Entities.tickets_ibfk_1" FromRole="ticket" ToRole="customer" />
+          <NavigationProperty Name="ticket_comments" Relationship="Entities.ticket_comments_ibfk_1" FromRole="ticket" ToRole="ticket_comments" />
+        </EntityType>
+        <EntityType Name="transaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="AccountId" Type="Int32" />
+          <Property Name="InvoiceId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <Property Name="Amount" Type="Double" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CardHolder" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DpsTxnRef" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DpsResponse" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TxnMac" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OperatedBy" Type="Int32" Nullable="false" />
+          <Property Name="OperatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="Memo" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="account" Relationship="Entities.transactions_ibfk_5" FromRole="transaction" ToRole="account" />
+          <NavigationProperty Name="invoice" Relationship="Entities.transactions_ibfk_4" FromRole="transaction" ToRole="invoice" />
+        </EntityType>
+        <EntityType Name="userclaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="ClaimValue" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="Entities.ApplicationUser_Claims" FromRole="userclaim" ToRole="user" />
+        </EntityType>
+        <EntityType Name="userlogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Entities.ApplicationUser_Logins" FromRole="userlogin" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="userclaims" Relationship="Entities.ApplicationUser_Claims" FromRole="user" ToRole="userclaim" />
+          <NavigationProperty Name="userlogins" Relationship="Entities.ApplicationUser_Logins" FromRole="user" ToRole="userlogin" />
+          <NavigationProperty Name="roles" Relationship="Entities.userroles" FromRole="user" ToRole="role" />
+        </EntityType>
+        <EntityType Name="void_invoices">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+          <Property Name="VoidBy" Type="Int32" Nullable="false" />
+          <Property Name="VoidDate" Type="DateTime" Nullable="false" />
+          <Property Name="JsonData" Type="String" Nullable="false" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="warning">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Module" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Operate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="AccountId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" />
+          <Property Name="ClearBy" Type="Int32" />
+          <Property Name="ClearDate" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="calling_rates_voip">
+          <Key>
+            <PropertyRef Name="Prefix" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="AreaName" />
+            <PropertyRef Name="RatePerMinute" />
+          </Key>
+          <Property Name="Prefix" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AreaName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RatePerMinute" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="account_balance_records_ibfk_1">
+          <End Type="Entities.account" Role="account" Multiplicity="1" />
+          <End Type="Entities.account_balance_records" Role="account_balance_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="account_balance_records">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="accounts_ibfk_1">
+          <End Type="Entities.customer" Role="customer" Multiplicity="1" />
+          <End Type="Entities.account" Role="account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="account">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="accounts_ibfk_2">
+          <End Type="Entities.branch" Role="branch" Multiplicity="1" />
+          <End Type="Entities.account" Role="account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="account">
+              <PropertyRef Name="RegisterBranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="accounts_ibfk_3">
+          <End Type="Entities.branch" Role="branch" Multiplicity="1" />
+          <End Type="Entities.account" Role="account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="account">
+              <PropertyRef Name="ChargeBranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="addon_charge_records_ibfk_6">
+          <End Type="Entities.account" Role="account" Multiplicity="0..1" />
+          <End Type="Entities.addon_charge_records" Role="addon_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="addon_charge_records">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="adjustments_ibfk_8">
+          <End Type="Entities.account" Role="account" Multiplicity="1" />
+          <End Type="Entities.adjustment" Role="adjustment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="adjustment">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_charge_records_ibfk_3">
+          <End Type="Entities.account" Role="account" Multiplicity="1" />
+          <End Type="Entities.calling_charge_records" Role="calling_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_charge_records">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="invoices_ibfk_1">
+          <End Type="Entities.account" Role="account" Multiplicity="1" />
+          <End Type="Entities.invoice" Role="invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="product_charge_records_ibfk_3">
+          <End Type="Entities.account" Role="account" Multiplicity="1" />
+          <End Type="Entities.product_charge_records" Role="product_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_charge_records">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="products_ibfk_1">
+          <End Type="Entities.account" Role="account" Multiplicity="1" />
+          <End Type="Entities.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tickets_ibfk_2">
+          <End Type="Entities.account" Role="account" Multiplicity="0..1" />
+          <End Type="Entities.ticket" Role="ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="transactions_ibfk_5">
+          <End Type="Entities.account" Role="account" Multiplicity="0..1" />
+          <End Type="Entities.transaction" Role="transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="transaction">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="addon_charge_records_ibfk_1">
+          <End Type="Entities.external_bill_files" Role="external_bill_files" Multiplicity="1" />
+          <End Type="Entities.addon_charge_records" Role="addon_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="external_bill_files">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="addon_charge_records">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="addon_charge_records_ibfk_4">
+          <End Type="Entities.service" Role="service" Multiplicity="0..1" />
+          <End Type="Entities.addon_charge_records" Role="addon_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="addon_charge_records">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="addon_charge_records_ibfk_5">
+          <End Type="Entities.invoice" Role="invoice" Multiplicity="0..1" />
+          <End Type="Entities.addon_charge_records" Role="addon_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="addon_charge_records">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="adjustments_ibfk_7">
+          <End Type="Entities.invoice" Role="invoice" Multiplicity="0..1" />
+          <End Type="Entities.adjustment" Role="adjustment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="adjustment">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_charge_records_ibfk_1">
+          <End Type="Entities.service" Role="service" Multiplicity="1" />
+          <End Type="Entities.calling_charge_records" Role="calling_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_charge_records">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_charge_records_ibfk_2">
+          <End Type="Entities.invoice" Role="invoice" Multiplicity="0..1" />
+          <End Type="Entities.calling_charge_records" Role="calling_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_charge_records">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_records_ibfk_10">
+          <End Type="Entities.calling_charge_records" Role="calling_charge_records" Multiplicity="0..1" />
+          <End Type="Entities.calling_records" Role="calling_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="calling_charge_records">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_records">
+              <PropertyRef Name="ChargeRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_international_region_details_ibfk_1">
+          <End Type="Entities.calling_international_regions" Role="calling_international_regions" Multiplicity="1" />
+          <End Type="Entities.calling_international_region_details" Role="calling_international_region_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="calling_international_regions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_international_region_details">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="service_usage_offers_ibfk_3">
+          <End Type="Entities.calling_international_regions" Role="calling_international_regions" Multiplicity="0..1" />
+          <End Type="Entities.service_usage_offers" Role="service_usage_offers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="calling_international_regions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="service_usage_offers">
+              <PropertyRef Name="CallingRegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_records_ibfk_1">
+          <End Type="Entities.external_bill_files" Role="external_bill_files" Multiplicity="1" />
+          <End Type="Entities.calling_records" Role="calling_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="external_bill_files">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_records">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_records_ibfk_4">
+          <End Type="Entities.service" Role="service" Multiplicity="0..1" />
+          <End Type="Entities.calling_records" Role="calling_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_records">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="calling_records_ibfk_7">
+          <End Type="Entities.service_usage_offers" Role="service_usage_offers" Multiplicity="0..1" />
+          <End Type="Entities.calling_records" Role="calling_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service_usage_offers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="calling_records">
+              <PropertyRef Name="OfferId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ticket_comments_ibfk_2">
+          <End Type="Entities.customer" Role="customer" Multiplicity="0..1" />
+          <End Type="Entities.ticket_comments" Role="ticket_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ticket_comments">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tickets_ibfk_1">
+          <End Type="Entities.customer" Role="customer" Multiplicity="0..1" />
+          <End Type="Entities.ticket" Role="ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipments_ibfk_2">
+          <End Type="Entities.equipment_models" Role="equipment_models" Multiplicity="0..1" />
+          <End Type="Entities.equipment" Role="equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="equipment_models">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="equipment">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipments_ibfk_3">
+          <End Type="Entities.product" Role="product" Multiplicity="0..1" />
+          <End Type="Entities.equipment" Role="equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="equipment">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="product_charge_records_ibfk_1">
+          <End Type="Entities.invoice" Role="invoice" Multiplicity="0..1" />
+          <End Type="Entities.product_charge_records" Role="product_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_charge_records">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="transactions_ibfk_4">
+          <End Type="Entities.invoice" Role="invoice" Multiplicity="0..1" />
+          <End Type="Entities.transaction" Role="transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="transaction">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="product_charge_records_ibfk_2">
+          <End Type="Entities.product" Role="product" Multiplicity="1" />
+          <End Type="Entities.product_charge_records" Role="product_charge_records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_charge_records">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="service_usage_offers_ibfk_2">
+          <End Type="Entities.product" Role="product" Multiplicity="1" />
+          <End Type="Entities.service_usage_offers" Role="service_usage_offers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="service_usage_offers">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="services_ibfk_1">
+          <End Type="Entities.product" Role="product" Multiplicity="1" />
+          <End Type="Entities.service" Role="service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="service">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ticket_comments_ibfk_3">
+          <End Type="Entities.staff" Role="staff" Multiplicity="0..1" />
+          <End Type="Entities.ticket_comments" Role="ticket_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staff">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ticket_comments">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ticket_comments_ibfk_1">
+          <End Type="Entities.ticket" Role="ticket" Multiplicity="1" />
+          <End Type="Entities.ticket_comments" Role="ticket_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ticket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ticket_comments">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUser_Claims">
+          <End Type="Entities.user" Role="user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Entities.userclaim" Role="userclaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="userclaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUser_Logins">
+          <End Type="Entities.user" Role="user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Entities.userlogin" Role="userlogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="userlogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userroles">
+          <End Type="Entities.user" Role="user" Multiplicity="*" />
+          <End Type="Entities.role" Role="role" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NewEntitiesStoreContainer" CdmEntityContainer="NewEntities">
+          <EntitySetMapping Name="account_balance_records">
+            <EntityTypeMapping TypeName="Entities.account_balance_records">
+              <MappingFragment StoreEntitySet="account_balance_records">
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="OperateDate" ColumnName="OperateDate" />
+                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Operate" ColumnName="Operate" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="AdjustmentId" ColumnName="AdjustmentId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="PreviousBalance" ColumnName="PreviousBalance" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="Entities.account">
+              <MappingFragment StoreEntitySet="accounts">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="IdentityNumber" ColumnName="IdentityNumber" />
+                <ScalarProperty Name="IdentityType" ColumnName="IdentityType" />
+                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="NextInvoiceIssueDate" ColumnName="NextInvoiceIssueDate" />
+                <ScalarProperty Name="InvoicePeriodType" ColumnName="InvoicePeriodType" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ChargeBranchId" ColumnName="ChargeBranchId" />
+                <ScalarProperty Name="RegisterBranchId" ColumnName="RegisterBranchId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="addon_charge_records">
+            <EntityTypeMapping TypeName="Entities.addon_charge_records">
+              <MappingFragment StoreEntitySet="addon_charge_records">
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="Warning" ColumnName="Warning" />
+                <ScalarProperty Name="DisplayDescription" ColumnName="DisplayDescription" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IgnoredBy" ColumnName="IgnoredBy" />
+                <ScalarProperty Name="Ignored" ColumnName="Ignored" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="PhoneType" ColumnName="PhoneType" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="Charge" ColumnName="Charge" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="OriNumber" ColumnName="OriNumber" />
+                <ScalarProperty Name="ChargeDate" ColumnName="ChargeDate" />
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="adjustments">
+            <EntityTypeMapping TypeName="Entities.adjustment">
+              <MappingFragment StoreEntitySet="adjustments">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="OperatedDate" ColumnName="OperatedDate" />
+                <ScalarProperty Name="OperatedBy" ColumnName="OperatedBy" />
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="branches">
+            <EntityTypeMapping TypeName="Entities.branch">
+              <MappingFragment StoreEntitySet="branches">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="calling_charge_records">
+            <EntityTypeMapping TypeName="Entities.calling_charge_records">
+              <MappingFragment StoreEntitySet="calling_charge_records">
+                <ScalarProperty Name="OperatedDate" ColumnName="OperatedDate" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Charge" ColumnName="Charge" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="calling_international_region_details">
+            <EntityTypeMapping TypeName="Entities.calling_international_region_details">
+              <MappingFragment StoreEntitySet="calling_international_region_details">
+                <ScalarProperty Name="IncludeMobile" ColumnName="IncludeMobile" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="calling_international_regions">
+            <EntityTypeMapping TypeName="Entities.calling_international_regions">
+              <MappingFragment StoreEntitySet="calling_international_regions">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="calling_offers">
+            <EntityTypeMapping TypeName="Entities.calling_offers">
+              <MappingFragment StoreEntitySet="calling_offers">
+                <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CallingRegionId" ColumnName="CallingRegionId" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="National" ColumnName="National" />
+                <ScalarProperty Name="Local" ColumnName="Local" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="calling_rates_pstn">
+            <EntityTypeMapping TypeName="Entities.calling_rates_pstn">
+              <MappingFragment StoreEntitySet="calling_rates_pstn">
+                <ScalarProperty Name="RatePerMinute" ColumnName="RatePerMinute" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="calling_records">
+            <EntityTypeMapping TypeName="Entities.calling_records">
+              <MappingFragment StoreEntitySet="calling_records">
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="Warning" ColumnName="Warning" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IgnoredBy" ColumnName="IgnoredBy" />
+                <ScalarProperty Name="Ignored" ColumnName="Ignored" />
+                <ScalarProperty Name="ChargeRecordId" ColumnName="ChargeRecordId" />
+                <ScalarProperty Name="PhoneType" ColumnName="PhoneType" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="OfferId" ColumnName="OfferId" />
+                <ScalarProperty Name="ActualCharge" ColumnName="ActualCharge" />
+                <ScalarProperty Name="ActualChargeMiute" ColumnName="ActualChargeMiute" />
+                <ScalarProperty Name="Charge" ColumnName="Charge" />
+                <ScalarProperty Name="ChargeMinute" ColumnName="ChargeMinute" />
+                <ScalarProperty Name="RatePerMinute" ColumnName="RatePerMinute" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="CallStart" ColumnName="CallStart" />
+                <ScalarProperty Name="IsMobile" ColumnName="IsMobile" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="AreaPrefix" ColumnName="AreaPrefix" />
+                <ScalarProperty Name="DesNumber" ColumnName="DesNumber" />
+                <ScalarProperty Name="OriNumber" ColumnName="OriNumber" />
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="Entities.customer">
+              <MappingFragment StoreEntitySet="customers">
+                <ScalarProperty Name="SignUpDate" ColumnName="SignUpDate" />
+                <ScalarProperty Name="IdentityNumber" ColumnName="IdentityNumber" />
+                <ScalarProperty Name="IdentityType" ColumnName="IdentityType" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="equipment_models">
+            <EntityTypeMapping TypeName="Entities.equipment_models">
+              <MappingFragment StoreEntitySet="equipment_models">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="equipments">
+            <EntityTypeMapping TypeName="Entities.equipment">
+              <MappingFragment StoreEntitySet="equipments">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DispatchedDate" ColumnName="DispatchedDate" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="StoredDate" ColumnName="StoredDate" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="external_bill_addon_converters">
+            <EntityTypeMapping TypeName="Entities.external_bill_addon_converters">
+              <MappingFragment StoreEntitySet="external_bill_addon_converters">
+                <ScalarProperty Name="IsDisplay" ColumnName="IsDisplay" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="DisplayAs" ColumnName="DisplayAs" />
+                <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="external_bill_files">
+            <EntityTypeMapping TypeName="Entities.external_bill_files">
+              <MappingFragment StoreEntitySet="external_bill_files">
+                <ScalarProperty Name="OperatedDate" ColumnName="OperatedDate" />
+                <ScalarProperty Name="OperatedBy" ColumnName="OperatedBy" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="AddonDateTo" ColumnName="AddonDateTo" />
+                <ScalarProperty Name="AddonDateFrom" ColumnName="AddonDateFrom" />
+                <ScalarProperty Name="AddonTotalCost" ColumnName="AddonTotalCost" />
+                <ScalarProperty Name="AddonRecordCount" ColumnName="AddonRecordCount" />
+                <ScalarProperty Name="AddonOriNumberCount" ColumnName="AddonOriNumberCount" />
+                <ScalarProperty Name="CallDateTo" ColumnName="CallDateTo" />
+                <ScalarProperty Name="CallDateFrom" ColumnName="CallDateFrom" />
+                <ScalarProperty Name="CallTotalCost" ColumnName="CallTotalCost" />
+                <ScalarProperty Name="CallRecordCount" ColumnName="CallRecordCount" />
+                <ScalarProperty Name="CallOriNumberCount" ColumnName="CallOriNumberCount" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invoices">
+            <EntityTypeMapping TypeName="Entities.invoice">
+              <MappingFragment StoreEntitySet="invoices">
+                <ScalarProperty Name="DeliveredDate" ColumnName="DeliveredDate" />
+                <ScalarProperty Name="AutoDeliver" ColumnName="AutoDeliver" />
+                <ScalarProperty Name="DisplayIssuedDate" ColumnName="DisplayIssuedDate" />
+                <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
+                <ScalarProperty Name="IssuedBy" ColumnName="IssuedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
+                <ScalarProperty Name="AdjustAmount" ColumnName="AdjustAmount" />
+                <ScalarProperty Name="CallingAmount" ColumnName="CallingAmount" />
+                <ScalarProperty Name="AddonAmount" ColumnName="AddonAmount" />
+                <ScalarProperty Name="ProductAmount" ColumnName="ProductAmount" />
+                <ScalarProperty Name="GST" ColumnName="GST" />
+                <ScalarProperty Name="ChargeAmountExcludeGST" ColumnName="ChargeAmountExcludeGST" />
+                <ScalarProperty Name="PreviousBalance" ColumnName="PreviousBalance" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plans">
+            <EntityTypeMapping TypeName="Entities.plan">
+              <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="DisplayPriority" ColumnName="DisplayPriority" />
+                <ScalarProperty Name="IsPromotion" ColumnName="IsPromotion" />
+                <ScalarProperty Name="ModemPrice" ColumnName="ModemPrice" />
+                <ScalarProperty Name="NewConnectionCharge" ColumnName="NewConnectionCharge" />
+                <ScalarProperty Name="MonthlyPrice" ColumnName="MonthlyPrice" />
+                <ScalarProperty Name="MonthsOfContract" ColumnName="MonthsOfContract" />
+                <ScalarProperty Name="VoipCount" ColumnName="VoipCount" />
+                <ScalarProperty Name="PstnCount" ColumnName="PstnCount" />
+                <ScalarProperty Name="BroadbandType" ColumnName="BroadbandType" />
+                <ScalarProperty Name="IsBusiness" ColumnName="IsBusiness" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_charge_records">
+            <EntityTypeMapping TypeName="Entities.product_charge_records">
+              <MappingFragment StoreEntitySet="product_charge_records">
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="ChargedDate" ColumnName="ChargedDate" />
+                <ScalarProperty Name="AmountGSTExclusive" ColumnName="AmountGSTExclusive" />
+                <ScalarProperty Name="CurrentProductChargedToDate" ColumnName="CurrentProductChargedToDate" />
+                <ScalarProperty Name="PreviousProductChargedToDate" ColumnName="PreviousProductChargedToDate" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="Entities.product">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="PrepayMonths" ColumnName="PrepayMonths" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="HasOneOffCharged" ColumnName="HasOneOffCharged" />
+                <ScalarProperty Name="OneOffChargeDate" ColumnName="OneOffChargeDate" />
+                <ScalarProperty Name="IsOneOff" ColumnName="IsOneOff" />
+                <ScalarProperty Name="MonthsOfTerm" ColumnName="MonthsOfTerm" />
+                <ScalarProperty Name="TermStartDate" ColumnName="TermStartDate" />
+                <ScalarProperty Name="IsTermed" ColumnName="IsTermed" />
+                <ScalarProperty Name="ChargedToDate" ColumnName="ChargedToDate" />
+                <ScalarProperty Name="ServiceGivenDate" ColumnName="ServiceGivenDate" />
+                <ScalarProperty Name="NumberOfMonthPerCharge" ColumnName="NumberOfMonthPerCharge" />
+                <ScalarProperty Name="DiscountRate" ColumnName="DiscountRate" />
+                <ScalarProperty Name="BasePriceGSTExclusive" ColumnName="BasePriceGSTExclusive" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="Entities.role">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="service_usage_offers">
+            <EntityTypeMapping TypeName="Entities.service_usage_offers">
+              <MappingFragment StoreEntitySet="service_usage_offers">
+                <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CallingRegionId" ColumnName="CallingRegionId" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="National" ColumnName="National" />
+                <ScalarProperty Name="Local" ColumnName="Local" />
+                <ScalarProperty Name="DataFlow" ColumnName="DataFlow" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ServiceSubType" ColumnName="ServiceSubType" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="services">
+            <EntityTypeMapping TypeName="Entities.service">
+              <MappingFragment StoreEntitySet="services">
+                <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ReadyForServiceDate" ColumnName="ReadyForServiceDate" />
+                <ScalarProperty Name="VoipAssignedDate" ColumnName="VoipAssignedDate" />
+                <ScalarProperty Name="VoipPassword" ColumnName="VoipPassword" />
+                <ScalarProperty Name="BroadbandPPPoePassword" ColumnName="BroadbandPPPoePassword" />
+                <ScalarProperty Name="BroadbandPPPoeLoginName" ColumnName="BroadbandPPPoeLoginName" />
+                <ScalarProperty Name="BroadbandCVLAN" ColumnName="BroadbandCVLAN" />
+                <ScalarProperty Name="BroadbandSVLAN" ColumnName="BroadbandSVLAN" />
+                <ScalarProperty Name="IdentityNumber" ColumnName="IdentityNumber" />
+                <ScalarProperty Name="SubType" ColumnName="SubType" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="staffs">
+            <EntityTypeMapping TypeName="Entities.staff">
+              <MappingFragment StoreEntitySet="staffs">
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ticket_comments">
+            <EntityTypeMapping TypeName="Entities.ticket_comments">
+              <MappingFragment StoreEntitySet="ticket_comments">
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tickets">
+            <EntityTypeMapping TypeName="Entities.ticket">
+              <MappingFragment StoreEntitySet="tickets">
+                <ScalarProperty Name="ClosedBy" ColumnName="ClosedBy" />
+                <ScalarProperty Name="ClosedDate" ColumnName="ClosedDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CustomerLastViewedDate" ColumnName="CustomerLastViewedDate" />
+                <ScalarProperty Name="StaffLastViewedDate" ColumnName="StaffLastViewedDate" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="SubType" ColumnName="SubType" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transactions">
+            <EntityTypeMapping TypeName="Entities.transaction">
+              <MappingFragment StoreEntitySet="transactions">
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="OperatedDate" ColumnName="OperatedDate" />
+                <ScalarProperty Name="OperatedBy" ColumnName="OperatedBy" />
+                <ScalarProperty Name="TxnMac" ColumnName="TxnMac" />
+                <ScalarProperty Name="DpsResponse" ColumnName="DpsResponse" />
+                <ScalarProperty Name="DpsTxnRef" ColumnName="DpsTxnRef" />
+                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+                <ScalarProperty Name="CardHolder" ColumnName="CardHolder" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userclaims">
+            <EntityTypeMapping TypeName="Entities.userclaim">
+              <MappingFragment StoreEntitySet="userclaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userlogins">
+            <EntityTypeMapping TypeName="Entities.userlogin">
+              <MappingFragment StoreEntitySet="userlogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="Entities.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="void_invoices">
+            <EntityTypeMapping TypeName="Entities.void_invoices">
+              <MappingFragment StoreEntitySet="void_invoices">
+                <ScalarProperty Name="JsonData" ColumnName="JsonData" />
+                <ScalarProperty Name="VoidDate" ColumnName="VoidDate" />
+                <ScalarProperty Name="VoidBy" ColumnName="VoidBy" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="warnings">
+            <EntityTypeMapping TypeName="Entities.warning">
+              <MappingFragment StoreEntitySet="warnings">
+                <ScalarProperty Name="ClearDate" ColumnName="ClearDate" />
+                <ScalarProperty Name="ClearBy" ColumnName="ClearBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Operate" ColumnName="Operate" />
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="calling_rates_voip">
+            <EntityTypeMapping TypeName="Entities.calling_rates_voip">
+              <MappingFragment StoreEntitySet="calling_rates_voip">
+                <ScalarProperty Name="RatePerMinute" ColumnName="RatePerMinute" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="userroles" TypeName="Entities.userroles" StoreEntitySet="userroles">
+            <EndProperty Name="role">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="user">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

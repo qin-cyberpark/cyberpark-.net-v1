@@ -1,0 +1,140 @@
+﻿@using CyberPark.Website.Models;
+@using CyberPark.Website.ViewModels;
+@using CyberPark.Domain.Core;
+@model ApplicationViewModels.Summary
+@{
+    string _mainStyle = Model.Account.IsBusiness ? "info" : "success";
+}
+<div class="container application" style="margin-top:20px;">
+    <div class="hidden-xs hidden-sm">
+        <ul class="nav nav-pills nav-wizard" style="width: 550px; margin: 0 auto;">
+            <li><a href="javascript:void(0);"><span class="glyphicon glyphicon-search"></span>Check Availability</a><div class="nav-arrow"></div></li>
+            <li><div class="nav-wedge"></div><a href="javascript:void(0);"><span class="glyphicon glyphicon-pencil"></span> Fill in Application</a><div class="nav-arrow"></div></li>
+            <li class="active"><div class="nav-wedge "></div><a href="javascript:void(0);"><span class="glyphicon glyphicon-eye-open"></span> Review & Checkout</a></li>
+        </ul>
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-xs-12">
+            <!-- #application summary plan -->
+            <div class="panel panel-@_mainStyle">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Application Review
+                    </h4>
+                </div>
+                <!-- Account Info -->
+                <div class="panel-body">
+                    <div class="row">
+                        <h4 class="col-md-8"> @Model.Account.Title @Model.Account.Name</h4>
+                        <h4 class="col-md-4 text-right"> Order Date:@DateTime.Now.ToString("dd MMM, yyyy")</h4>
+                        <h4 class="col-md-12"> @Model.Account.Address</h4>
+                        <h4 class="col-md-12"> @Model.Account.Email, @Model.Account.Mobile</h4>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <h3 class="col-md-12 text-@_mainStyle">Product</h3>
+                    </div>
+                    <table class="table text-right">
+                        <thead>
+                            <tr>
+                                <th>Service / Product</th>
+                                <th class="text-right">Monthly Charge</th>
+                                <th class="text-right">Qty</th>
+                                <th class="text-right">Sub Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-left">@Model.Plan.Name</td>
+                                <td>@Model.Plan.MonthlyPriceGSTExclusive.ToString("$0.00")</td>
+                                <td>@(Model.PayMonthly ? 1 : 12)</td>
+                                <td>@((Model.Plan.MonthlyPriceGSTExclusive * (Model.PayMonthly ? 1 : 12)).ToString("$0.00"))</td>
+                            </tr>
+                            @if (Model.Plan.PstnCount > 0)
+                            {
+                                <tr>
+                                    <td class="text-left">Land Line</td>
+                                    <td>$0.00</td>
+                                    <td>@Model.Plan.PstnCount</td>
+                                    <td>$0.00</td>
+                                </tr>
+                            }
+
+                            @if (Model.Plan.VoipCount > 0)
+                            {
+                                <tr>
+                                    <td class="text-left">VoIP Phone</td>
+                                    <td>$0.00</td>
+                                    <td>@Model.Plan.VoipCount</td>
+                                    <td>$0.00</td>
+                                </tr>
+                            }
+
+                            <tr>
+                                <td class="text-left">Modem Rental</td>
+                                <td>$0.00</td>
+                                <td>1</td>
+                                <td>$0.00</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>One-Off Charge</td>
+                                <td>Qty</td>
+                                <td>Sub Total</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Standard Installation</td>
+                                <td>$0.00</td>
+                                <td>1</td>
+                                <td>$0.00</td>
+                            </tr>
+                            @if (!Model.PayMonthly)
+                            {
+                                <tr>
+                                    <td class="text-left">Extra Month</td>
+                                    <td>$0.00</td>
+                                    <td>1</td>
+                                    <td>$0.00</td>
+                                </tr>
+                            }
+                            <!-- total -->
+                            <tr>
+                                <td colspan="2" rowspan="3"></td>
+                                <td class="text-right">Total Before GST</td>
+                                <td>@((Model.Plan.MonthlyPriceGSTExclusive * (Model.PayMonthly ? 1 : 12)).ToString("$0.00"))</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">GST 15%</td>
+                                <td>@((Model.Plan.MonthlyGST * (Model.PayMonthly ? 1 : 12)).ToString("$0.00"))</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">Total After GST</td>
+                                <td>@((Model.Plan.MonthlyPriceGSTInclusieve * (Model.PayMonthly ? 1 : 12)).ToString("$0.00"))</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        @using (Html.BeginForm("Checkout", "Application", FormMethod.Post))
+                        {
+                            <div class="col-md-8">
+
+                                <input type="checkbox" iCheck required />
+                                <span class="text-@_mainStyle">
+                                    I have read and agree to the CyberPark <a href="#">Terms and Conditions</a>
+                                </span>
+                            </div>
+                            <div class="col-md-4 text-right">
+
+                                <button class="btn btn-@_mainStyle">Check Out</button>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

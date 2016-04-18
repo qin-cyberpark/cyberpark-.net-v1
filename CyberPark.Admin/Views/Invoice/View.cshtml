@@ -1,0 +1,278 @@
+﻿@using CyberPark.Domain.Core;
+@{
+    Invoice _inv = ViewBag.Invoice;
+    ViewBag.Title = "Invoice " + _inv.Id.ToString();
+}
+<div class="container" style="max-width:900px;border:solid 1px black;">
+    <!-- invoice info -->
+    <div class="row" style="background: url('/Content/img/bg.png');padding:10px;">
+        <div class="col-md-2" style="margin-top:10px;">
+            <img src="~/Content/img/logo.png" />
+        </div>
+        <div class="col-md-6">
+            <h2 style="color:white">Statement&nbsp;|&nbsp;Tax Invoice</h2>
+        </div>
+        <div class="col-md-4 text-right">
+            <p style="line-height:10px;color:white;font-size:12px;font-weight:normal">CyberPark Limited</p>
+            <p style="line-height:10px;color:white;font-size:12px;font-weight:normal">PO Box 41547, St Lukes</p>
+            <p style="line-height:10px;color:white;font-size:12px;font-weight:normal">Auckland 1346, New Zealand</p>
+            <p style="line-height:10px;color:white;font-size:12px;font-weight:normal">Tel: 0800 2 CYBER (29237)</p>
+            <p style="line-height:10px;color:white;font-size:12px;font-weight:normal">www.cyberpark.co.nz</p>
+            <p style="line-height:10px;color:white;font-size:12px;font-weight:normal">GST No.: 113-460-148</p>
+        </div>
+    </div>
+    <div class="row" style="background-color:#ddd">
+        <div class="col-md-12 text-right"> Customer Id: @_inv.Account.Customer.Id &nbsp;&nbsp;|&nbsp;&nbsp; Account Id: @_inv.Account.Id</div>
+    </div>
+    <div class="row" style="margin-top:30px;">
+        <div class="col-md-6">
+            <div style="font-size:20px">
+                @_inv.Account.Customer.Name
+            </div>
+            <div style="font-size:20px">
+                @_inv.Account.Address
+            </div>
+        </div>
+        <div class="col-md-6 text-right">
+            <div>Invoice Id: <font style="font-size:20px">@_inv.Id</font></div>
+            <div>Date: @_inv.IssuedDate.ToString("dd MMM yyyy")</div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:30px">
+        <div class="col-md-12" style="color:#004549;font-size:20px">@string.Format("Your Bill:{0:dd MMM yyyy} to {1:dd MMM yyyy}", _inv.DateFrom, _inv.DateTo)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2" style="background-color:#004549;margin-left:10px">
+            <div>
+                <font style="font-size:14px;color:#ddd">Previous Balance</font>
+            </div>
+            <div>
+                <font style="font-size:32px;color:white">@_inv.PreviousBalance.ToString("$#,##0.00")</font>
+            </div>
+        </div>
+        <div class="col-md-1 text-center">
+            <font style="font-size:36px">+</font>
+        </div>
+        <div class="col-md-2" style="background-color:#004549">
+            <div>
+                <font style="font-size:14px;color:#ddd">Current Amount</font>
+            </div>
+            <div>
+                <font style="font-size:32px;color:white">@_inv.ChargeAmountIncludeGST.ToString("$#,##0.00")</font>
+            </div>
+        </div>
+        <div class="col-md-1 text-center">
+            <font style="font-size:36px">+</font>
+        </div>
+        <div class="col-md-2" style="background-color:#004549">
+            <div>
+                <font style="font-size:14px;color:#ddd">TopUp / Adjust</font>
+            </div>
+            <div>
+                <font style="font-size:32px;color:white">@((_inv.AdjustAmount - _inv.TransactionAmount).ToString("$#,##0.00"))</font>
+            </div>
+        </div>
+        <div class="col-md-1 text-center">
+            <font style="font-size:36px">=</font>
+        </div>
+        <div class="col-md-2" style="background-color:#004549">
+            <div>
+                <font style="font-size:14px;color:#ddd">Current Balance</font>
+            </div>
+            <div>
+                <font style="font-size:32px;color:white">@_inv.CurrentBalance.ToString("$#,##0.00")</font>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:30px;">
+        <div class="col-md-12 text-center" style="background-color:#004945"><font style="font-size:16px;color:white">Balance Details</font></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table style="width:100%">
+                <thead>
+                    <tr style="border-bottom:solid 2px;">
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- service -->
+                    @foreach(var srvRec in _inv.ProductCharges.OrderByDescending(x => x.AmountGSTExclusive))
+                    {
+                        <tr>
+                            <td>
+                                <div>@srvRec.Product.Name</div>
+
+                                @if (srvRec.Product.Services.Count > 1)
+                                {
+                                    foreach (var srv in srvRec.Product.Services)
+                                    {
+
+                                        <div style="padding-left:40px;font-weight:normal;font-size:13px">@srv.Description</div>
+                                    }
+                                }
+                            </td>
+                            <td>@string.Format("{0:dd MMM, yyyy} to {1:dd MMM, yyyy}", srvRec.PreviousProductChargedToDate.AddDays(1), srvRec.CurrentProductChargedToDate)</td>
+                            <td class="text-right">@srvRec.Product.PriceGSTExclusive.ToString("$#,##0.00")</td>
+                        </tr>
+
+                    }
+                    <!-- AddOn -->
+                    @foreach (var addon in _inv.AddonCharges)
+                    {
+                        <tr>
+                            <td>
+                                <div>@addon.DisplayDescription (@addon.Service.IdentityNumber)</div>
+                            </td>
+                            <td>@string.Format("{0:dd MMM, yyyy} to {1:dd MMM, yyyy}", addon.DateFrom, addon.DateTo)</td>
+                            <td class="text-right">@addon.Charge.ToString("$#,##0.00")</td>
+                        </tr>
+                    }
+
+                    <!-- call -->
+                    @foreach (var callChrg in _inv.CallingCharges)
+                    {
+                        <tr>
+                            <td>
+                                <div>@callChrg.Service.Description</div>
+                            </td>
+                            <td></td>
+                            <td class="text-right">@callChrg.Charge.ToString("$#,##0.00")</td>
+                        </tr>
+                    }
+
+                    <!-- subtotal before -->
+                    <tr style="border-top:solid 1px;">
+                        <td>Subtotal</td>
+                        <td></td>
+                        <td class="text-right">@_inv.ChargeAmountExcludeGST.ToString("$#,##0.00")</td>
+                    </tr>
+                    <!-- subtotal gst -->
+                    <tr>
+                        <td>GST as 15%</td>
+                        <td></td>
+                        <td class="text-right">@_inv.GST.ToString("$#,##0.00")</td>
+                    </tr>
+                    <!-- total charge -->
+                    <tr style="border-top:solid 2px;">
+                        <td>Total charge</td>
+                        <td></td>
+                        <td class="text-right">@_inv.ChargeAmountIncludeGST.ToString("$#,##0.00")</td>
+                    </tr>
+                    <!-- previous balance -->
+                    <tr>
+                        <td>Pervious Balance</td>
+                        <td></td>
+                        <td class="text-right">@_inv.PreviousBalance.ToString("$#,##0.00")</td>
+                    </tr>
+                    <!-- transaction -->
+                    @if (_inv.Transactions.Count > 0)
+                    {
+                        foreach (var trans in _inv.Transactions)
+                        {
+                            <tr>
+                                <td>
+                                    <div>Transaction</div>
+                                </td>
+                                <td>@trans.Date.ToString("dd MMM, yyyy")</td>
+                                <td class="text-right">-@trans.Amount.ToString("$#,##0.00")</td>
+                            </tr>
+                        }
+                    }
+                    <!-- adjustment -->
+                    @if (_inv.Adjustments.Count > 0)
+                    {
+                        foreach (var adj in _inv.Adjustments)
+                        {
+                            <tr>
+                                <td>
+                                    <div>@adj.Memo</div>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="text-right">
+                                    @if (adj.Amount >= 0)
+                                    {
+                                        <text>+</text>
+                                    }
+                                    @adj.Amount.ToString("$#,##0.00")
+                                </td>
+                            </tr>
+                        }
+                    }
+                    <!-- current balance -->
+                    <tr style="border-top:solid 2px">
+                        <td>Current Balance</td>
+                        <td></td>
+                        <td class="text-right">@_inv.CurrentBalance.ToString("$#,##0.00")</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @if (_inv.CallingCharges.Count > 0)
+    {
+        <div class="row" style="margin-top:30px;">
+            <div class="col-md-12 text-center" style="background-color:#004945;"><font style="font-size:16px;color:white">Calling Details</font></div>
+            <div class="col-md-12">
+
+                @foreach (var call in _inv.CallingCharges)
+                {
+                    if (call.CallingRecords.Count > 0)
+                    {
+                        <h4 class="text-success"> @call.Service.Description</h4>
+                        <table style="width:100%">
+                            <thead>
+                                <tr style="border-bottom:solid 2px">
+                                    <th>
+                                        Calling Start
+                                    </th>
+                                    <th>
+                                        Destination
+                                    </th>
+                                    <th>
+                                        Description
+                                    </th>
+                                    <th>Minutes</th>
+                                    <th>Fee</th>
+                                    <th>Charge</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var rec in call.CallingRecords.OrderByDescending(x => x.CallStart))
+                                {
+                                    <tr>
+                                        <td>
+                                            @rec.CallStart.ToString("dd MMM, yyyy HH:mm:ss")
+                                        </td>
+                                        <td>
+                                            @rec.DesNumber
+                                        </td>
+                                        <td>
+                                            @(string.IsNullOrEmpty(rec.Description) ? rec.AreaName : rec.Description)
+                                        </td>
+                                        <td>@rec.ChargeMinute.ToString()</td>
+                                        <td>@rec.Charge.ToString("$#,##0.00")</td>
+                                        <td>@rec.ActualCharge.Value.ToString("$#,##0.00")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                }
+
+            </div>
+        </div>
+    }
+    <div class="row" style="margin-top:30px;">
+        <div class="col-md-12 text-center" style="background-color:#004945;height:20px"></div>
+    </div>
+</div>

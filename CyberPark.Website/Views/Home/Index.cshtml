@@ -1,0 +1,92 @@
+﻿<div class="cyberpark-home-bg">
+    <img class="img-responsive" src="~/Content/img/cyberpark_home_text.png" alt="open term $99 per month" title="open term $99 per month">
+    <div class="container">
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-12">
+                <div class="carbonad">
+                    <p class="lead text-center hidden-xs" style="color:white;margin:10px auto;">Let us help you figure out what's available to you</p>
+                    <p style="font-size:14px;color:white">Eg. 290 Queen St, Auckland, 1010</p>
+                    <div class="input-group">
+                        <input id="address" type="text" class="form-control input-lg" placeholder="Put your address here"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-success btn-lg ladda-button" data-style="zoom-in" type="button" id="goCheck">
+                                <span class="ladda-label glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cyberpark-home-bottom"></div>
+</div>
+<div class="container" style="margin-top:30px;">
+    <div class="row btn-purple" style="margin-bottom:10px;">
+        <div class="col-md-6" style="padding-left:0;">
+            <img class="img-responsive" src="~/Content/img/promotion.png" style="" alt="Free Protable HDD & Free iPad" title="Free Protable HDD & Free iPad">
+        </div>
+        <div class="col-md-6">
+            <h1 class="lead" style="padding:10px 20px 0;margin:10px 0 0;font-size: 36px;font-weight: bold;">Unlimited Data</h1>
+            <h1 class="lead" style="padding:10px 20px 0;margin:0 0 0;font-size: 36px;font-weight: bold;">VoIP Homeline</h1>
+            <a href="/plans/promotions" class="btn btn-lg btn-outline-inverse pull-right" style="margin: 8px 14px;">View More</a>
+        </div>
+    </div>
+    <div class="row btn-warning" style="margin-bottom:10px;">
+        <div class="col-md-6">
+            <p style="padding:20px 20px 0;"></p>
+            <img class="img-responsive" src="~/Content/img/adsl-p.png" alt="Classic Broadband" title="Classic Broadband">
+        </div>
+        <div class="col-md-6">
+            <h2 class="lead" style="padding:20px 20px 0;margin:0 0 10px;">ADSL BROADBAND</h2>
+            <p style="padding:0 20px 0;">
+                We provide the best deal on ADSL broadband plan. No speed limited and data cap on our Unlimited ADSL plans. All our plans are pay in advance. It provides you a clear and easy read bill. Simple and easy on-line application method can be filled in 5 mins. Or, give us a call, 0800 2 CYBER(29237). Our customer service can help you to apply your broadband as well.
+            </p>
+            <a href="/plans/broadband" class="btn btn-lg btn-outline-inverse pull-right" style="margin:14px;">View More</a>
+        </div>
+    </div>
+    <div class="row btn-danger" style="margin-bottom:10px;">
+        <div class="col-md-6">
+            <p style="padding:20px 20px 0;"></p>
+            <img class="img-responsive" src="~/Content/img/vdsl-p.png" alt="Unlimited Ultra Fast Broadband" title="Unlimited Ultra Fast Broadband">
+        </div>
+        <div class="col-md-6">
+            <h2 class="lead" style="padding:20px 20px 0;margin:0 0 10px;">High Speed VDSL</h2>
+            <p style="padding:0 20px 0;">
+                New generation technology on VDSL plan. Faster, stable and reliable VDSL can go through your current copper line. The speed of VDSL will be 3 times faster than ADSL broadband. Download speed achieve to 15Mbps to 35Mbps, and upload speed achieve to around 10Mbps.
+            </p>
+            <a href="/plans/ultra-fast-vdsl" class="btn btn-lg btn-outline-inverse pull-right" style="margin:14px;">View More</a>
+        </div>
+    </div>
+    <div class="row btn-info" style="margin-bottom:10px;">
+        <div class="col-md-6">
+            <p style="padding:20px 20px 0;"></p>
+            <img class="img-responsive" src="~/Content/img/ufb-p.png" alt="Super Fast Unlimited Broadband" title="Super Fast Unlimited Broadband">
+        </div>
+        <div class="col-md-6">
+            <h2 class="lead" style="padding:20px 20px 0;margin:0 0 10px;">Ultra-Fast-Fibre</h2>
+            <p style="padding:0 20px 0;">
+                The new generation of broadband is coming to NZ. There are more and more areas are covered by UFB Fibre. Find a plan and check your address for UFB coverage. No speed limited and data cap on our Unlimited ADSL plans. All our plans are pay in advance. Simple and easy on-line application method can be filled in 5 mins. Or, give us a call, 0800 2 CYBER(29237).
+            </p>
+            <a href="/plans/ultra-fast-fibre" class="btn btn-lg btn-outline-inverse pull-right" style="margin:14px;">View More</a>
+        </div>
+    </div>
+</div>
+<div id="map_canvas" style="width:720px;height:600px;display:none;"></div>
+<script src="https://maps.google.com/maps/api/js?sensor=false&libraries=places&region=NZ" type="text/javascript"></script>
+<script src="~/Content/js/autoCompleteAddress.js" type="text/javascript"></script>
+<script language="javascript">
+    $().ready(function () {
+        $("#goCheck").click(function () {
+            if ($("#address").val().length > 0) {
+                var url = "/application/personal?address=" + $("#address").val();
+                document.location.href = url;
+            }
+        });
+        $('#address').keypress(function (e) {
+            if (event.keyCode == 13) {
+                $('#goCheck').trigger('click');
+            }
+        });
+    });
+
+</script>

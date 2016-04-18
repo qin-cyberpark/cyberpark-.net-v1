@@ -1,0 +1,55 @@
+﻿@{
+    var _returnUrl = (string) ViewBag.ReturnUrl;
+}
+<div class="container" style="padding-top: 20px; padding-bottom: 150px;">
+    <div class="row" ng-controller="LoginController as vm">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Sign Up</div>
+                <div class="panel-body">
+                    <!-- messsage -->
+                    <div ng-if="globalAlerts" ng-repeat="alert in globalAlerts">
+                        <div ng-class="{'alert':true,'alert-success':alert.type==='success','alert-danger':alert.type==='error'}">
+                            <span ng-bind="alert.message"></span>
+                            <button type="button" class="close" data-dismiss="alert" ng-click="RemoveGlobalAlerts(alert)">&times;</button>
+                        </div>
+                    </div>
+                    <!-- register form -->
+                    <form name="form" ng-submit="vm.signup('@_returnUrl')" role="form">
+                        <div class="form-group col-md-6">
+                            <label>First Name</label>
+                            <input type="text" name="firstName" id="firstName" class="form-control" maxlength="50" ng-model="vm.newCustomer.firstName" placeholder="First Name" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Last Name</label>
+                            <input type="text" name="lastName" id="lastName" class="form-control" maxlength="50" ng-model="vm.newCustomer.lastName" placeholder="Last Name" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Email</label>
+                            <input type="email" name="email" id="email" class="form-control" maxlength="80" ng-model="vm.newCustomer.email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Mobile</label>
+                            <input type="text" name="mobile" id="mobile" class="form-control" maxlength="20" ng-model="vm.newCustomer.mobile" placeholder="Mobile" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="password">
+                                Password
+                            </label>
+                            <input type="password" name="password" id="password" class="form-control" maxlength="30" ng-model="vm.newCustomer.password" required />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="password">
+                                Confirm Password
+                            </label>
+                            <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" maxlength="30" ng-model="vm.newCustomer.confirmPassword" required />
+                        </div>
+                        <div class="form-actions text-center">
+                            <button type="submit" class="btn btn-primary btn-lg" ladda="vm.signuping" data-style="expand-right">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

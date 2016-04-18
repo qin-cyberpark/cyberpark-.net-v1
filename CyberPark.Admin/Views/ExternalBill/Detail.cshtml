@@ -1,0 +1,93 @@
+﻿@using CyberPark.Website.ViewModels;
+@{
+    ViewBag.Title = "External Bill";
+    string _billId = (string)ViewBag.BillId;
+}
+
+<div class="container" ng-controller="ExternalBillController as vm" ng-init="vm.load('@_billId')">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading" role="tab" id="unmathced_calls">
+                    <h4 class="panel-title">
+                        File
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <h5>{{vm.data.bill.source}}</h5>
+                    <h5>{{vm.data.bill.fileName}}</h5>
+                    <h5>{{vm.data.bill.callDateFrom}}</h5>
+                    <h5>{{vm.data.bill.callDateTo}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- #region unmatched calls -->
+            <div class="panel panel-danger" ng-if="vm.data.unmatchedCalls.length > 0">
+                <div class="panel-heading" role="tab" id="unmathced_calls">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" href="#panel_unmathced_calls" aria-controls="panel_unmathced_calls">
+                            Unmatched Calls
+                        </a>
+                    </h4>
+                </div>
+                <div id="panel_unmathced_calls" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panel_unmathced_calls">
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default" ng-repeat="group in vm.data.unmatchedCalls">
+                                <div class="panel-heading" role="tab">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#call_{{group.number}}" aria-controls="call_{{group.number}}">
+                                            {{group.number}} - {{group.count}} records
+                                        </a>
+                                        <button type="button" class="btn btn-xs btn-default" title="Ignore" ng-click="vm.ignore(group, true)">
+                                            Ignore
+                                        </button>
+                                        <button type="button" class="btn btn-xs btn-default" title="Match" ng-click="vm.match(group,  true)">
+                                            Match
+                                        </button>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #endregion -->
+            <!-- #region unmatched services -->
+            <div class="panel panel-danger" ng-if="vm.data.unmatchedServices.length > 0">
+                <div class="panel-heading" role="tab" id="unmathced_services">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" href="#panel_unmathced_services" aria-controls="panel_unmathced_services">
+                            Unmatched Services
+                        </a>
+                    </h4>
+                </div>
+                <div id="panel_unmathced_services" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panel_unmathced_services">
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default" ng-repeat="group in vm.data.unmatchedServices">
+                                <div class="panel-heading" role="tab">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#call_{{group.number}}" aria-controls="call_{{group.number}}">
+                                            {{group.number}} - {{group.count}} records
+                                        </a>
+                                        <button type="button" class="btn btn-xs btn-default" title="Ignore" ng-click="vm.ignore(group, false)">
+                                            Ignore
+                                        </button>
+                                        <button type="button" class="btn btn-xs btn-default" title="Match" ng-click="vm.match(group,  false)">
+                                            Match
+                                        </button>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #endregion -->
+        </div>
+    </div>
+</div>

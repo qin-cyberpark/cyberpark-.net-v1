@@ -1,0 +1,24 @@
+﻿@CHARSET "UTF-8";
+/* for loading animaion */
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+#scrollUp {
+	bottom: 20px;
+	right: 20px;
+	height: 38px;
+	width: 38px;
+	background: url("/Content/img/top.png") no-repeat;
+}

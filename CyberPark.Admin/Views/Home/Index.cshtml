@@ -1,0 +1,338 @@
+﻿@using CyberPark.Website.ViewModels;
+@using CyberPark.Domain.Core;
+@{
+    ViewBag.Title = "Home Page";
+    var _accountCounts = (HomeViewModels.AccountCountViewModel)ViewBag.AccountCounts;
+    var _billUnmatchedCounts = (HomeViewModels.ExternalBillCountViewModel)ViewBag.ExternalBillCounts;
+    var _accountantCounts = (HomeViewModels.AccountantCountViewModel)ViewBag.AccountantCounts;
+}
+<!-- warning -->
+<!-- div class="container" ng-controller="WarningController as warnCtrl">
+    <div class="alert alert-warning" ng-repeat="w in warnCtrl.warnings">
+        <span>[{{w.module}}]{{w.message}}</span>
+        <div class="pull-right">
+            <button type="button" class="btn btn-success" data-dismiss="alert" ng-click="warnCtrl.clearWarning(w)">Clear</button>
+            <button type="button" class="btn btn-warning" data-dismiss="alert">Ignore</button>
+        </div>
+    </div>
+</!--div -->
+<div class="container">
+    <div class="row">
+        <!-- #region CRM -->
+        <div class="col-md-3">
+            <div class="panel panel-success first-row-panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong class="text-success">CRM</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <h4>Accounts</h4>
+                    <!-- #region operatation needs -->
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.Suspended">
+                                Suspended
+                                @if (@_accountCounts.Suspended > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.Suspended</span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.Applied">
+                                Applied
+                                @if (@_accountCounts.Applied > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.Applied</span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.Rejected">
+                                Rejected
+                                @if (@_accountCounts.Rejected > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.Rejected</span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.UpgradeApplied">
+                                Upgrade Applied
+                                @if (@_accountCounts.UpgradeApplied > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.UpgradeApplied</span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.TerminationApplied">
+                                Termination Applied
+                                @if (@_accountCounts.TerminationApplied > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.TerminationApplied </span>}
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- #endregion -->
+                    <!-- #region normal status -->
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.InService">
+                                In Service
+                                @if (@_accountCounts.InService > 0)
+                                {
+                                    <span class="badge" style="background:green;">@_accountCounts.InService </span>
+                                }
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.Cancelled">
+                                Cancelled
+                                @if (@_accountCounts.Cancelled > 0)
+                                {<span class="badge" style="background:black;">@_accountCounts.Cancelled  </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.Refunded">
+                                Refunded
+                                @if (@_accountCounts.Refunded > 0)
+                                {
+                                    <span class="badge" style="background:black;">@_accountCounts.Refunded  </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.Upgraded">
+                                Upgraded
+                                @if (@_accountCounts.Upgraded > 0)
+                                {
+                                    <span class="badge" style="background:black;">@_accountCounts.Upgraded  </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.Terminated">
+                                Terminated
+                                @if (@_accountCounts.Terminated > 0)
+                                {
+                                    <span class="badge" style="background:black;">@_accountCounts.Terminated  </span>}
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- #endregion -->
+                    <!-- #region queries -->
+                    <h4>Queries</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-bell"></span>
+                            <a href="#">
+                                General Queries <span class="badge" style="background:black;">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-bell"></span>
+                            <a href="#">
+                                All Queries <span class="badge" style="background:black;">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- #endregion -->
+                </div>
+            </div>
+        </div>
+        <!-- #endregion -->
+        <!-- #region Accoutant -->
+        <div class="col-md-3">
+            <div class="panel panel-success first-row-panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong class="text-success">Accountant</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <h4>Accounts</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.Prepaid">
+                                Prepaid
+                                @if (@_accountCounts.Prepaid > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.Prepaid   </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.RefundApplied">
+                                Refund Applied
+                                @if (@_accountCounts.RefundApplied > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.RefundApplied    </span>}
+                            </a>
+                        </li>
+                    </ul>
+                    <h4>Invoices</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-bell"></span>
+                            <a href="#">
+                                Undelivered
+                                @if (@_accountantCounts.UndeliveredInvoice > 0)
+                                {<span class="badge" style="background:black;">@_accountantCounts.UndeliveredInvoice</span>
+                                }
+                            </a>
+                        </li>
+                    </ul>
+                    <h4>Queries</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-bell"></span>
+                            <a href="#">
+                                Invoice Queries
+                                <span class="badge" style="background:black;">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- #endregion -->
+        <!-- #region Provision -->
+        <div class="col-md-3">
+            <div class="panel panel-success first-row-panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong class="text-success">Provision</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <h4>Accounts</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.PrepaymentConfirmed">
+                                Prepayment Confirmed
+                                @if (@_accountCounts.PrepaymentConfirmed > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.PrepaymentConfirmed  </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.InProcess">
+                                In Process
+                                @if (@_accountCounts.InProcess > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.InProcess   </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.RFSDayGiven">
+                                RFS Day Given
+                                @if (@_accountCounts.RFSDayGiven > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.RFSDayGiven    </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.UpgradeConfirmed">
+                                Upgrade Confirmed
+                                @if (@_accountCounts.UpgradeConfirmed > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.UpgradeConfirmed     </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.UpgradeSubmitted">
+                                Upgrade Submitted
+                                @if (@_accountCounts.UpgradeSubmitted > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.UpgradeSubmitted      </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.SuspensionApplied">
+                                Suspension Applied
+                                @if (@_accountCounts.SuspensionApplied > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.SuspensionApplied       </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.RecoveryApplied">
+                                Recovery Applied
+                                @if (@_accountCounts.RecoveryApplied > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.RecoveryApplied        </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.TerminationConfirmed">
+                                Termination Confirmed
+                                @if (@_accountCounts.TerminationConfirmed > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.TerminationConfirmed          </span>}
+                            </a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/account?status=@Service.Statuses.TerminationSubmitted">
+                                Termination Submitted
+                                @if (@_accountCounts.TerminationSubmitted > 0)
+                                {<span class="badge" style="background:red;">@_accountCounts.TerminationSubmitted         </span>}
+                            </a>
+                        </li>
+                    </ul>
+                    <h4>Queries</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-bell"></span>
+                            <a href="#">
+                                Ticket <span class="badge" style="background:black;">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- #endregion -->
+        <!-- #region System -->
+        <div class="col-md-3">
+            <div class="panel panel-success first-row-panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong class="text-success">System</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <h4>External Bill</h4>
+                    @if (_billUnmatchedCounts.UnmatchedCalls.Count > 0)
+                    {
+                    <h5>Unmathed Calling Bill</h5>
+                    <ul class="list-unstyled">
+                        @foreach (var bill in _billUnmatchedCounts.UnmatchedCalls)
+                            {
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/ExternalBill/detail/@bill.Key.Id" target="_blank">
+                                @bill.Key.FileName
+                                <span class="badge" style="background:red;">@bill.Value</span>
+                            </a>
+                        </li>
+                            }
+                    </ul>
+                    }
+
+                    @if (_billUnmatchedCounts.UnmatchedServices.Count > 0)
+                    {
+                    <h5>Unmathed Service Bill</h5>
+                    <ul class="list-unstyled">
+                        @foreach (var bill in _billUnmatchedCounts.UnmatchedServices)
+                            {
+                        <li>
+                            <span class="glyphicon glyphicon-list"></span>
+                            <a href="/ExternalBill/detail/@bill.Key.Id" target="_blank">
+                                @bill.Key.FileName
+                                <span class="badge" style="background:red;">@bill.Value</span>
+                            </a>
+                        </li>
+                            }
+                    </ul>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- #endregion -->
+    </div>
+</div>

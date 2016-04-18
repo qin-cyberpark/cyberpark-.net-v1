@@ -1,0 +1,118 @@
+﻿@using CyberPark.Domain.Core;
+@{
+    ViewBag.Title = "Staff";
+    var _branches = (IList<Branch>)ViewBag.Branches;
+}
+<div class="container" ng-controller="StaffController as vm" ng-init="vm.loadStaffs()">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Staff
+                <button type="button" class="btn btn-xs btn-success pull-right" title="New Staff" ng-click="vm.createStaff()">
+                    New Staff
+                </button>
+            </h4>
+        </div>
+        <table id="staffList" class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Branch</th>
+                    <th>Role</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="staff in vm.staffs">
+                    <td>{{staff.name}}</td>
+                    <td>{{staff.branch}}</td>
+                    <td>{{staff.role}}</td>
+                    <td>{{staff.userName}}</td>
+                    <td>{{staff.email}}</td>
+                    <td>{{staff.mobile}}</td>
+                    <td class="text-right">
+                        <button type="button" class="btn btn-xs btn-success" title="Edit Plan" ng-click="vm.editStaff(staff)">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- #region new / edit modal -->
+    <div class="modal fade" id="staffEditModal" tabindex="-1" role="dialog" aria-labelledby="staffEditModal" data-backdrop="static">
+        <div class="modal-dialog modal-md" role="document">
+            <form class="form-horizontal" ng-submit="vm.saveStaff()">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="planEditModalLabel">{{vm.editingStaff.staff.id?"Edit Staff":"New Staff"}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="planName" class="control-label col-md-2">Name</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="planName" ng-model="vm.editingStaff.name" required/>
+                            </div>
+                            <label for="planName" class="control-label col-md-2">Branch</label>
+                            <div class="col-md-4">
+                                <select class="form-control" ng-model="vm.editingStaff.branchId">
+                                    @foreach(var b in _branches)
+                                    {
+                                        <option value="@b.Id">@b.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="planName" class="control-label col-md-2">Role</label>
+                            <div class="col-md-4">
+                                <select class="form-control" ng-model="vm.editingStaff.role">
+                                    <option value="@CyberPark.Domain.Core.User.RoleTypes.Administrator">@CyberPark.Domain.Core.User.RoleTypes.Administrator</option>
+                                    <option value="@CyberPark.Domain.Core.User.RoleTypes.Accountant">@CyberPark.Domain.Core.User.RoleTypes.Accountant</option>
+                                    <option value="@CyberPark.Domain.Core.User.RoleTypes.Provision">@CyberPark.Domain.Core.User.RoleTypes.Provision</option>
+                                    <option value="@CyberPark.Domain.Core.User.RoleTypes.Manager">@CyberPark.Domain.Core.User.RoleTypes.Manager</option>
+                                    <option value="@CyberPark.Domain.Core.User.RoleTypes.Sales">@CyberPark.Domain.Core.User.RoleTypes.Sales</option>
+                                </select>
+                            </div>
+                            <label for="planName" class="control-label col-md-2">UserName</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="vm.editingStaff.userName" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="planName" class="control-label col-md-2">Email</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="vm.editingStaff.email" required />
+                            </div>
+                            <label for="planName" class="control-label col-md-2">Mobile</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="vm.editingStaff.mobile" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="planName" class="control-label col-md-2">Change Password</label>
+                            <div class="col-md-4">
+                                <input type="password" class="form-control" ng-model="vm.editingStaff.password" />
+                            </div>
+                            <label for="planName" class="control-label col-md-2">Confirm Password</label>
+                            <div class="col-md-4">
+                                <input type="password" class="form-control" ng-model="vm.editingStaff.confirmPassword"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-if="!vm.editingStaff.saving">Cancel</button>
+                        <button type="submit" class="btn btn-success">{{vm.editingStaff.id?"Update":"Save"}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- #endregion new / edit modal -->
+</div>

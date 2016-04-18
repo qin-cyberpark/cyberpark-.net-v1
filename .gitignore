@@ -1,0 +1,14 @@
+###############
+#    ignore   #
+###############
+###############
+#    global   #
+###############
+###############
+#    project  #
+###############
+/TestResults/
+/CyberPark.Domain.Core.Test/
+/Packages/
+/*/bin/
+/*/obj/

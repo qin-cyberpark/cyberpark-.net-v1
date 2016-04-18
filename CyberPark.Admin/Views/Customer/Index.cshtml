@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Customer";
+}
+<!-- search -->
+<div class="container" ng-controller="CustomerController as cusCtrl" ng-init="cusCtrl.search()">
+    <!-- searcher -->
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Search
+            </h4>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-1">Customer#</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_customerId" name="srch_customerId" class="form-control" ng-model="cusCtrl.searcher.customerId" />
+                    </div>
+                    <label class="control-label col-md-1">Account#</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_accountId" name="srch_accountId" class="form-control" ng-model="cusCtrl.searcher.accountId" />
+                    </div>
+                    <label class="control-label col-md-1">Name</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_name" name="srch_name" class="form-control" ng-model="cusCtrl.searcher.name" />
+                    </div>
+                    <label class="control-label col-md-1">Address</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_address" name="srch_address" class="form-control" ng-model="vm.searcher.address" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-1">ASID</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_asid" name="srch_asid" class="form-control" ng-model="cusCtrl.searcher.asid" />
+                    </div>
+                    <label class="control-label col-md-1">PSTN No</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_pstn" name="srch_pstn" class="form-control" ng-model="cusCtrl.searcher.pstn" />
+                    </div>
+                    <label class="control-label col-md-1">VoIP No</label>
+                    <div class="col-md-2">
+                        <input type="text" id="srch_voip" name="srch_voip" class="form-control" ng-model="cusCtrl.searcher.voip" />
+                    </div>
+                    <div class="col-md-2 col-md-offset-1 text-right">
+                        <button type="button" class="btn btn-success btn-block" id="query" ng-click="cusCtrl.search()">Query</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- loading -->
+    <div class="row">
+        <div class="text-center">
+            <img src="/Content/img/loading.gif" ng-if="cusCtrl.loading" />
+        </div>
+    </div>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Customer
+                <button type="button" class="btn btn-xs btn-success pull-right" title="New Customer" ng-click="cusCtrl.createCustomer()">
+                    New Customer
+                </button>
+            </h4>
+        </div>
+        <table id="addressList" class="table">
+            <thead>
+                <tr>
+                    <th>Customer#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Account#</th>
+                    <th>Address</th>
+                    <th>Type</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="cus in cusCtrl.customers">
+                <tr ng-repeat="acct in cus.accounts">
+                    <td ng-if="$first" rowspan="{{cus.accounts.length}}"><a target="_blank" href="/customer/view/{{cus.id}}">{{cus.id}}</a></td>
+                    <td ng-if="$first" rowspan="{{cus.accounts.length}}">{{cus.name}}</td>
+                    <td ng-if="$first" rowspan="{{cus.accounts.length}}">{{cus.email}}</td>
+                    <td ng-if="$first" rowspan="{{cus.accounts.length}}">{{cus.mobile}}</td>
+                    <td>{{acct.id}}</td>
+                    <td>{{acct.address}}</td>
+                    <td>{{acct.type}}</td>
+                    <td class="text-right">{{acct.balance | currency:"$"}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

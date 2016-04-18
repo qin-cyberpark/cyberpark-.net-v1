@@ -1,0 +1,104 @@
+﻿@using CyberPark.Website.Models;
+@using CyberPark.Domain.Core;
+@model Account
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="/home/customer" class="list-group-item">General Info</a>
+                <a href="#" class="list-group-item active">My Addresses</a>
+                @foreach (var account in Model.Customer.Accounts)
+                {
+                    <a href="/home/myAddress/@account.Id" class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;@account.Id-@account.Address </a>
+                }
+            </div>
+        </div>
+        <div class="col-md-9 ">
+            <div class="panel-group" id="orders_accordion">
+                <div class="panel panel-@(Model.IsActive ? "success" : "danger")">
+                    <div class="panel-heading">
+                        @Model.Id-@Model.Address (@(Model.IsActive ? "Active" : "Disable"))
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>@Model.Name </h4>
+                                <h4>@Model.Email, @Model.Mobile </h4>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <h3>Balance:@Model.Balance.ToString("$0.00")</h3> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li  role="presentation" class="active">
+                                <a href="#service" aria-controls="service" role="tab" data-toggle="tab">Service</a>
+                            </li>
+                            <li  role="presentation" class="">
+                                <a href="#invoice" aria-controls="invoice" role="tab" data-toggle="tab">Invoice</a>
+                            </li>
+                        </ul>
+                        <!-- #region service-->
+                        <div class="tab-content">
+                            <div role="tabpanel"  class="tab-pane active" id="service">
+                                <table class="table table-hover" style="margin-top:20px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Service / Product</th>
+                                            <th>Price</th>
+                                            <th>Expired</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var product in Model.Products)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <p>@product.Name</p>
+                                                    @foreach (var servcie in product.Services)
+                                                    {
+                                                        <p>&nbsp; &nbsp; &nbsp; &nbsp;@servcie.Description</p>
+                                                    }
+                                                </td>
+                                                <td>@product.PriceGSTInclusive.ToString("$0.00")</td>
+                                                <td>@(product.ChargedToDate?.ToString("dd MMM, yyyy"))</td>
+                                                <td>@product.Status
+                                                    @if (Service.Statuses.Applied.Equals(product.Status))
+                                                    {
+                                                    <p><a href="/application/prepay/@product.Id">pay to continue</a></p>
+                                                    }
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- #region invoice-->
+                            <div role="tabpanel" class="tab-pane" id="invoice">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Due Date</th>
+                                            <th>Reference</th>
+                                            <th>Payable</th>
+                                            <th>Total Credit</th>
+                                            <th>Paid</th>
+                                            <th>Balance</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

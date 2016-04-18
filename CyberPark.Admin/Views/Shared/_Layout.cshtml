@@ -1,0 +1,119 @@
+﻿@using CyberPark.Website.Models
+<!DOCTYPE html>
+<html lang="en" ng-app="CyberPark">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CyberPark</title>
+    @Styles.Render("~/css/main")
+    @Scripts.Render("~/bundle/js-lib")
+</head>
+<body>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Home</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Customer <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/customer">
+                                    <span class="glyphicon glyphicon-list" style="padding-right:10px;"></span>
+                                    Customer List
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Account <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/account">
+                                    <span class="glyphicon glyphicon-list" style="padding-right:10px;"></span>
+                                    Account List
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            System <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/plan">
+                                    <span class="glyphicon glyphicon-list" style="padding-right:10px;"></span>
+                                    Plan
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/externalBill/index">
+                                    <span class="glyphicon glyphicon-list" style="padding-right:10px;"></span>
+                                    External Bill
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/staff/index">
+                                    <span class="glyphicon glyphicon-list" style="padding-right:10px;"></span>
+                                    User
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <p class="navbar-text pull-right"  ng-controller="LoginController as vm" >
+                    @if(xISPUser.CurrentUser!=null && xISPUser.CurrentUser.Staff!=null){
+                    <span class="glyphicon glyphicon-user" style="margin-right:10px;"></span>
+                    <a href="javascript:void(0);" class="navbar-link" style="margin-right:10px;">
+                        @xISPUser.CurrentUser.Staff.Name &nbsp;|&nbsp;My ID: @xISPUser.CurrentUser.Staff.Id
+                    </a>
+                    <a ng-click="vm.logout()" href="#LogOut" data-toggle="tooltip" data-placement="bottom" data-original-title="Sign Out">
+                        <span class="glyphicon glyphicon-log-out" style="margin-right:10px;"></span>
+                    </a>
+                    }else{
+                        <a href="/login" data-toggle="tooltip" data-placement="bottom" data-original-title="Sign In">
+                            <span class="glyphicon glyphicon-log-in" style="margin-right:10px;"></span>Sign In
+                        </a>
+                    }
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <!-- messsage -->
+    <div class="container" ng-if="globalAlerts" ng-repeat="alert in globalAlerts">
+        <div ng-class="{'alert':true,'alert-success':alert.type==='success','alert-danger':alert.type==='error'}">
+            <span ng-bind="alert.message"></span>
+            <button type="button" class="close" data-dismiss="alert" ng-click="closeAlert(alert)">&times;</button>
+        </div>
+    </div>
+    @RenderBody()
+    <div class="container">
+        <hr>
+        <footer>
+            <p>
+                &copy; Broadband Management System 2016
+            </p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundle/js")
+</body>
+</html>
