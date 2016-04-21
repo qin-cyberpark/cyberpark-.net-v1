@@ -18,7 +18,7 @@ namespace CyberPark.Website.ViewModels
             }
 
             public int Count(string status) {
-                return _accounts.Where(x => x.Status.Equals(status)).Count();
+                return _accounts.Where(x => x.Products.Any(p=>p.Status.Equals(status))).Count();
             }
 
             #region status

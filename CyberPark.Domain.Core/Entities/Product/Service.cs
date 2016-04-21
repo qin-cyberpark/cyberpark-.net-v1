@@ -52,7 +52,7 @@ namespace CyberPark.Domain.Core
         public DateTime? ReadyForServiceDate { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(30)]
         public string Status { get; set; }
 
         public bool IsDeleted { get; set; }

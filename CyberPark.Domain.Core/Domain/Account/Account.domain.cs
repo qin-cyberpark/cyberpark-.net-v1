@@ -80,32 +80,32 @@
             }
         }
 
-        [NotMapped]
-        public string Status
-        {
-            get
-            {
-                string status = null;
+        //[NotMapped]
+        //public string Status
+        //{
+        //    get
+        //    {
+        //        string status = null;
 
-                foreach (var p in Products)
-                {
-                    foreach(var s in p.Services)
-                    {
-                        if (Service.Types.BroadBand.Equals(s.Type))
-                        {
-                            return s.Status;
-                        }
+        //        foreach (var p in Products)
+        //        {
+        //            foreach(var s in p.Services)
+        //            {
+        //                if (Service.Types.BroadBand.Equals(s.Type))
+        //                {
+        //                    return s.Status;
+        //                }
 
-                        if (Service.Types.Phone.Equals(s.Type) && string.IsNullOrEmpty(status))
-                        {
-                            status = s.Status;
-                        }
-                    }
-                }
+        //                if (Service.Types.Phone.Equals(s.Type) && string.IsNullOrEmpty(status))
+        //                {
+        //                    status = s.Status;
+        //                }
+        //            }
+        //        }
 
-                return status;
-            }
-        }
+        //        return status;
+        //    }
+        //}
 
         private DateTime? GetBroadbandServiceGivenDate(xISPContext db)
         {
@@ -152,8 +152,6 @@
                 return false;
             }
         }
-
-
 
 
         #endregion

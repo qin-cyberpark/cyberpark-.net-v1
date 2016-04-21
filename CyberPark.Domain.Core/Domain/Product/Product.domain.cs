@@ -11,20 +11,20 @@ namespace CyberPark.Domain.Core
     public partial class Product
     {
         #region properties
-        [NotMapped]
-        public string Status {
-            get
-            {
-                var srv = Services.FirstOrDefault(x => Service.Types.BroadBand.Equals(x.Type));
-                if (srv != null)
-                {
-                    return srv.Status;
-                }
+        //[NotMapped]
+        //public string Status {
+        //    get
+        //    {
+        //        var srv = Services.FirstOrDefault(x => Service.Types.BroadBand.Equals(x.Type));
+        //        if (srv != null)
+        //        {
+        //            return srv.Status;
+        //        }
 
-                srv = Services.FirstOrDefault(x => Service.Types.Phone.Equals(x.Type));
-                return srv?.Status;
-            }
-        }
+        //        srv = Services.FirstOrDefault(x => Service.Types.Phone.Equals(x.Type));
+        //        return srv?.Status;
+        //    }
+        //}
 
         [NotMapped]
         public double PriceGSTExclusive

@@ -46,9 +46,9 @@ namespace CyberPark.Domain.Core
         [Column(TypeName = "bit")]
         public bool? HasOneOffCharged { get; set; }
 
-        //[Required]
-        //[StringLength(10)]
-        //public string Status { get; set; }
+        [Required]
+        [StringLength(30)]
+        public string Status { get; set; }
 
         [ForeignKey("AccountId")]
         public virtual Account Account { get; set; }

@@ -38,6 +38,10 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.9.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.9\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -74,6 +78,7 @@
     <Compile Include="Domain\Account\Customer.domin.cs" />
     <Compile Include="Domain\ExternalBill\ExternalBill.domain.cs" />
     <Compile Include="Domain\Invoice\Adjustment.domain.cs" />
+    <Compile Include="Domain\Invoice\Invoice.pdf.cs" />
     <Compile Include="Domain\Invoice\VoidInvoice.domain.cs" />
     <Compile Include="Domain\Management\Branch.domain.cs" />
     <Compile Include="Domain\Management\Equipment.domain.cs" />

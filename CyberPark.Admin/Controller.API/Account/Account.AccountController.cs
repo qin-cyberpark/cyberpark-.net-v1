@@ -38,7 +38,7 @@ namespace CyberPark.Website.Controllers.API
             var accts = Account.Get(_db, query, true);
             if (!string.IsNullOrEmpty(status))
             {
-                accts = accts.Where(x => x.Status.Equals(status)).ToList();
+                accts = accts.Where(x => x.Products.Any(p=>p.Status.Equals(status))).ToList();
             }
 
             var rslt = new ApiResult<IList<Account>>
