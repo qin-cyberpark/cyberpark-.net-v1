@@ -124,8 +124,14 @@ namespace CyberPark.Domain.Core
                     return false;
                 }
 
+                //do not have service given date
+                if(ServiceGivenDate == null)
+                {
+                    return false;
+                }
+
                 //have charge to date is more an one month from current date
-                if(ChargedToDate != null && DateTime.Today.AddMonths(1) < ChargedToDate)
+                if (ChargedToDate != null && DateTime.Today.AddMonths(1) < ChargedToDate)
                 {
                     return false;
                 }

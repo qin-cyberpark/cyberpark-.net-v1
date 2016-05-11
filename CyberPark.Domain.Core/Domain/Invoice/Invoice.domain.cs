@@ -77,7 +77,7 @@
         {
             get
             {
-                return PreviousBalance + ChargeAmountIncludeGST + AdjustAmount - TransactionAmount;
+                return PreviousBalance - ChargeAmountIncludeGST + AdjustAmount + TransactionAmount;
             }
         }
 
@@ -211,7 +211,9 @@
                 if (MailHelper.Send(
                     "cupidshen@163.com", //Account.Email,
                     string.Format("CyberPark Statement {0}", Id),
-                    Utility.ToJson(this), ref msg))
+                    Utility.ToJson(this), 
+                    new string[] { PdfPath},
+                    ref msg))
                 {
                     DeliveredDate = DateTime.Now;
                     db.Entry(this).State = EntityState.Modified;

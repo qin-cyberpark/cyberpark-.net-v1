@@ -42,7 +42,7 @@ namespace Q.xISP.Transfer
             //}
 
             //transaction
-            //DataTranfer.ConvertTransactionAfter(new DateTime(2015, 12, 31, 23, 59, 59));
+            DataTranfer.ConvertTransactionAfter(new DateTime(2016, 3, 1, 0, 0, 0));
 
             Console.WriteLine("finished");
             Console.ReadLine();

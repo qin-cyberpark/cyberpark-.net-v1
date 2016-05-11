@@ -25,13 +25,19 @@ namespace CyberPark.Domain.Utilities
                                             SysConfig.Instance.MailSenderDisplayName);
         }
 
-        public static bool Send(string toAddress, string subject, string body, ref string msg)
+        public static bool Send(string toAddress, string subject, string body, string[] attachments, ref string msg)
         {
             lock (_locker) {
                 // Specify the message content.
                 MailMessage message = new MailMessage(_fromAddress, new MailAddress(toAddress));
                 message.Subject = subject;
                 message.Body = body;
+                foreach(var s in attachments)
+                {
+                    if (System.IO.File.Exists(s)) {
+                        message.Attachments.Add(new Attachment(s));
+                    }
+                }
                 try
                 {
                     _client.Send(message);

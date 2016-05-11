@@ -201,13 +201,16 @@
                     inv.Create(db);
 
                     //update balance
-                    Balance += inv.ChargeAmountIncludeGST;
+                    Balance -= inv.ChargeAmountIncludeGST;
+
                     //set next invoice issue date
                     NextInvoiceIssueDate = (NextInvoiceIssueDate?.Date ?? DateTime.Now).AddMonths(1);
                     db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
                     dbTrans.Commit();
 
+                    //safe pdf
+                    inv.ToPDF();
                     return inv;
                 }
                 catch (Exception ex)
