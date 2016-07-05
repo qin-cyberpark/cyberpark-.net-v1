@@ -22,6 +22,7 @@ namespace Q.xISP.Transfer
 
             //orders
             //var oriCustomers = DataTranfer.LoadCustomer();
+            ////var oriCustomers = DataTranfer.LoadCustomer(new int[] { 600346,600368});
             //var asids = new SortedList<int, string>();
             //using (var db = new OriEntities())
             //{
@@ -33,6 +34,7 @@ namespace Q.xISP.Transfer
             //        }
             //    });
             //}
+
             //using (var db = new NewEntities())
             //{
             //    foreach (OriCustomer oc in oriCustomers)
@@ -42,7 +44,7 @@ namespace Q.xISP.Transfer
             //}
 
             //transaction
-            DataTranfer.ConvertTransactionAfter(new DateTime(2016, 3, 1, 0, 0, 0));
+            DataTranfer.ConvertTransactionAfter(new DateTime(2016, 5, 3, 0, 0, 0));
 
             Console.WriteLine("finished");
             Console.ReadLine();

@@ -11,21 +11,6 @@ namespace CyberPark.Domain.Core
     public partial class Product
     {
         #region properties
-        //[NotMapped]
-        //public string Status {
-        //    get
-        //    {
-        //        var srv = Services.FirstOrDefault(x => Service.Types.BroadBand.Equals(x.Type));
-        //        if (srv != null)
-        //        {
-        //            return srv.Status;
-        //        }
-
-        //        srv = Services.FirstOrDefault(x => Service.Types.Phone.Equals(x.Type));
-        //        return srv?.Status;
-        //    }
-        //}
-
         [NotMapped]
         public double PriceGSTExclusive
         {
@@ -131,9 +116,19 @@ namespace CyberPark.Domain.Core
                 }
 
                 //have charge to date is more an one month from current date
-                if (ChargedToDate != null && DateTime.Today.AddMonths(1) < ChargedToDate)
+                
+                if (ChargedToDate != null)
                 {
-                    return false;
+                    if (Account.InvoicePeriodTypes.CalendarMonth.Equals(Account.InvoicePeriodType) 
+                        && DateTime.Today.Month == ChargedToDate.Value.Month)
+                    {
+                        return false;
+                    }  
+
+                    if(DateTime.Today.AddMonths(1) < ChargedToDate)
+                    {
+                        return false;
+                    }
                 }
 
                 //one-off

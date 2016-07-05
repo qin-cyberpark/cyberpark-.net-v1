@@ -100,7 +100,6 @@
                 status: 'Using',
                 isDeleted:false
             });
-            console.log(vm.editingProduct.services);
         }
 
         /* remove service */
@@ -124,7 +123,6 @@
 
         /* save service */
         vm.saveService = function (srv) {
-            console.log("Save");
             //update general
             if (srv.id) {
                 $http.put('/api/service/', srv).success(function (result) {

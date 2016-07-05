@@ -263,6 +263,10 @@
                 db.SaveChanges();
 
                 dbTrans.Commit();
+
+                //safe pdf
+                inv.ToPDF();
+
                 return inv;
             }
 
@@ -282,9 +286,10 @@
 
             if (!ExternalBill.HasExternalBillReadyForInvoice(issueDate))
             {
-                Warning.WriteAsync(WarningModules.Invoice, "IssueInvoiceAll",
-                            string.Format("external bills not ready, issue date {0}", issueDate));
+                string str = string.Format("external bills not ready, issue date {0}", issueDate);
+                Warning.WriteAsync(WarningModules.Invoice, "IssueInvoiceAll", str);
 
+                Logger.Info("IssueAllInvoice", str);
                 Logger.Info("IssueAllInvoice", "end issue all invoice");
 
                 return;
@@ -308,8 +313,13 @@
 
                     if (acct.IssueInvoce(db, issueDate, staffId, ref msg) == null)
                     {
-                        Warning.WriteAsync(WarningModules.Invoice, "IssueInvoiceAll",
-                            string.Format("fail to issue invoice, {0}", msg), accountId: acct.Id);
+                        string logMsg = string.Format("fail to issue invoice for account {0}, {1}", acct.Id, msg);
+                        Logger.Info("IssueInvoiceAll", logMsg);
+                        Warning.WriteAsync(WarningModules.Invoice, "IssueInvoiceAll", logMsg, accountId: acct.Id);
+                    }
+                    else
+                    {
+                        Logger.Info("IssueInvoiceAll", string.Format("invoice for account {0} issued", acct.Id));
                     }
                 }
             }

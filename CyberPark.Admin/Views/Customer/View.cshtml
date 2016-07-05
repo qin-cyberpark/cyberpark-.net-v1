@@ -228,11 +228,11 @@
                     </div>
                     <div class="panel-body">
                         <!-- #region product info -->
-                        <div class="col-sm-6 col-md-4" ng-repeat="pdct in mthPdctCtrl.products | orderBy:'-priceGSTExclusive'">
+                        <div class="col-sm-6 col-md-6" ng-repeat="pdct in mthPdctCtrl.products | orderBy:'-priceGSTExclusive'">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <!-- service,useage offer package -->
-                                    <span>{{pdct.name}}</span>
+                                    <span>{{pdct.name}} - {{pdct.status}}</span>
                                     <button type="button" class="btn btn-xs btn-default pull-right" title="Edit Proudct" ng-click="mthPdctCtrl.edit(pdct)">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
@@ -328,6 +328,16 @@
                                                 <label class="control-label col-md-2">Term Months</label>
                                                 <div class="col-md-2">
                                                     <input type="number" class="form-control" ng-model="mthPdctCtrl.editingProduct.monthsOfTerm" min="0" max="36" required>
+                                                </div>
+                                                <!-- status -->
+                                                <label class="control-label col-md-1">Status</label>
+                                                <div class="col-md-2">
+                                                    <select class="selectpicker show-tick form-control" ng-model="mthPdctCtrl.editingProduct.status" required>
+                                                        @foreach (var status in Service.Statuses.Status)
+                                                            {
+                                                            <option value="@status">@status</option>
+                                                            }
+                                                    </select>
                                                 </div>
                                             </div>
                                             <!-- operate -->

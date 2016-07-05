@@ -60,6 +60,36 @@ namespace Q.xISP.Transfer
 
             return oriCustomers;
         }
+
+        public static List<OriCustomer> LoadCustomer(int[] ids)
+        {
+            //load original customer
+            List<tm_customer> customers;
+            using (OriEntities db = new OriEntities())
+            {
+                var query = from c in db.tm_customer
+                            join o in db.tm_customer_order
+                            on c.id equals o.customer_id
+                            //where o.order_status.Equals("using")
+                            orderby o.customer_id ascending
+                            select c;
+
+                customers = query.Distinct().ToList();
+            }
+
+            //load order
+            List<OriCustomer> oriCustomers = new List<OriCustomer>();
+            foreach (tm_customer c in customers)
+            {
+                if (ids.Contains(c.id))
+                {
+                    oriCustomers.Add(OriCustomer.Load(c));
+                    Console.WriteLine(string.Format("{0} - DONE", c.id));
+                }
+            }
+
+            return oriCustomers;
+        }
         public static void InitRole()
         {
             _roleManager.Create(new IdentityRole("Customer"));
@@ -213,9 +243,9 @@ namespace Q.xISP.Transfer
                 foreach (OriOrder oriO in oriCustomer.Orders)
                 {
                     #region order->account
-                    if(!oriO.Order.order_status.Equals("using") &&
+                    if (!oriO.Order.order_status.Equals("using") &&
                         !oriO.Order.order_status.Equals("rfs") &&
-                        !(oriO.Order.order_status.Equals("disconnected") && oriO.Order.disconnected_date != null 
+                        !(oriO.Order.order_status.Equals("disconnected") && oriO.Order.disconnected_date != null
                             && oriO.Order.disconnected_date > DateTime.Today.AddMonths(-1)))
                     {
                         continue;
@@ -276,7 +306,7 @@ namespace Q.xISP.Transfer
                         Id = Guid.NewGuid().ToString(),
                         AccountId = acc.Id,
                         DiscountRate = 0.0D,
-                        AppliedDate = oriO.Order.order_create_date==null? oriO.Order.order_create_date .Value: DateTime.Today
+                        AppliedDate = oriO.Order.order_create_date == null ? oriO.Order.order_create_date.Value : DateTime.Today
                     };
 
                     string productStatus = null;
@@ -304,7 +334,7 @@ namespace Q.xISP.Transfer
                         }
 
                         //
-                        service srvTmp = OrderDetailToService(asids,oriOdetail, oriO.Order);
+                        service srvTmp = OrderDetailToService(asids, oriOdetail, oriO.Order);
                         srvTmp.Status = productStatus;
 
                         if (oriOdetail.detail_type.ToLower().Equals("plan-term") ||
@@ -336,7 +366,7 @@ namespace Q.xISP.Transfer
                                     mainPdct.ChargedToDate = new DateTime(chargeDt.Year, chargeDt.Month, day).AddDays(dayDiff);
                                 }
                             }
-                          
+
 
                             mainPdct.NumberOfMonthPerCharge = 1;
                             mainPdct.IsOneOff = false;
@@ -470,7 +500,7 @@ namespace Q.xISP.Transfer
                     //
                     srv.Type = Service.Types.BroadBand;
                     srv.SubType = od.detail_plan_type;
-                    srv.IdentityNumber = asids.ContainsKey(or.id)?asids[or.id]: null;
+                    srv.IdentityNumber = asids.ContainsKey(or.id) ? asids[or.id].Trim() : null;
                     srv.BroadbandCVLAN = or.cvlan;
                     srv.BroadbandSVLAN = or.svlan;
                     srv.BroadbandPPPoeLoginName = or.pppoe_loginname;

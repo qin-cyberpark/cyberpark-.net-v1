@@ -318,7 +318,7 @@ namespace CyberPark.Domain.Core
                 return srv.Product.AccountId;
 
             }
-            catch
+            catch(Exception ex)
             {
                 return 0;
             }

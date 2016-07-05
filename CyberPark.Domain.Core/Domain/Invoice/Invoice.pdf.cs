@@ -486,11 +486,10 @@ namespace CyberPark.Domain.Core
 
                     doc.Add(tbCalling);
                 }
-
-                //close
-                doc.Close();
-
             }
+
+            //close
+            doc.Close();
         }
     }
 }
