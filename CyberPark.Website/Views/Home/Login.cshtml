@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <!-- sign in form -->
-                    <form name="form" ng-submit="vm.login('@_returnUrl')" role="form">
+                    <form name="form" ng-submit="vm.login('@_returnUrl')" role="form" method="post">
                         <div class="form-group">
                             <label>Your Mobile or Email</label>
                             <input type="text" name="phoneOrEmail" id="phoneOrEmail" class="form-control" ng-model="vm.phoneOrEmail" placeholder="Account Name" required>
